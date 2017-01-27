@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="DEALER"
+        android:id="@+id/dealer_textView"
+        android:layout_below="@+id/cash_intro_textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/dealer_1_imageView"
+        android:src="@drawable/five_diamonds"
+        android:layout_below="@+id/dealer_textView"
+        android:layout_alignLeft="@+id/dealer_textView"
+        android:layout_alignStart="@+id/dealer_textView" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/dealer_2_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/dealer_1_imageView"
+        android:layout_alignLeft="@+id/dealer_1_imageView"
+        android:layout_alignStart="@+id/dealer_1_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/dealer_3_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/dealer_2_imageView"
+        android:layout_alignLeft="@+id/dealer_2_imageView"
+        android:layout_alignStart="@+id/dealer_2_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/dealer_4_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/dealer_3_imageView"
+        android:layout_alignLeft="@+id/dealer_3_imageView"
+        android:layout_alignStart="@+id/dealer_3_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/dealer_5_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/dealer_4_imageView"
+        android:layout_alignLeft="@+id/dealer_4_imageView"
+        android:layout_alignStart="@+id/dealer_4_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/dealer_6_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/dealer_5_imageView"
+        android:layout_alignLeft="@+id/dealer_5_imageView"
+        android:layout_alignStart="@+id/dealer_5_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/dealer_7_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/dealer_6_imageView"
+        android:layout_alignLeft="@+id/dealer_6_imageView"
+        android:layout_alignStart="@+id/dealer_6_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/dealer_8_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/dealer_7_imageView"
+        android:layout_alignLeft="@+id/dealer_7_imageView"
+        android:layout_alignStart="@+id/dealer_7_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="DEALER HAS"
+        android:id="@+id/dealer_score1_textView"
+        android:layout_below="@+id/dealer_1_imageView"
+        android:layout_alignLeft="@+id/dealer_textView"
+        android:layout_alignStart="@+id/dealer_textView"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="5"
+        android:id="@+id/dealer_score_textView"
+        android:layout_alignTop="@+id/dealer_score1_textView"
+        android:layout_toRightOf="@+id/dealer_score1_textView"
+        android:layout_toEndOf="@+id/dealer_score1_textView"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="PLAYER"
+        android:id="@+id/player_textView"
+        android:layout_below="@+id/dealer_score1_textView"
+        android:layout_alignLeft="@+id/dealer_score1_textView"
+        android:layout_alignStart="@+id/dealer_score1_textView"
+        android:layout_marginTop="30dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/player_1_imageView"
+        android:src="@drawable/ten_clubs"
+        android:layout_below="@+id/player_textView"
+        android:layout_alignLeft="@+id/player_textView"
+        android:layout_alignStart="@+id/player_textView" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/player_2_imageView"
+        android:src="@drawable/three_diamonds"
+        android:layout_alignTop="@+id/player_1_imageView"
+        android:layout_alignLeft="@+id/player_1_imageView"
+        android:layout_alignStart="@+id/player_1_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/player_3_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/player_2_imageView"
+        android:layout_alignLeft="@+id/player_2_imageView"
+        android:layout_alignStart="@+id/player_2_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/player_4_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/player_3_imageView"
+        android:layout_alignLeft="@+id/player_3_imageView"
+        android:layout_alignStart="@+id/player_3_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/player_5_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/player_4_imageView"
+        android:layout_alignLeft="@+id/player_4_imageView"
+        android:layout_alignStart="@+id/player_4_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/player_6_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/player_5_imageView"
+        android:layout_alignLeft="@+id/player_5_imageView"
+        android:layout_alignStart="@+id/player_5_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/player_7_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/player_6_imageView"
+        android:layout_alignLeft="@+id/player_6_imageView"
+        android:layout_alignStart="@+id/player_6_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="102dp"
+        android:id="@+id/player_8_imageView"
+        android:src="@drawable/card_back"
+        android:layout_alignTop="@+id/player_7_imageView"
+        android:layout_alignLeft="@+id/player_7_imageView"
+        android:layout_alignStart="@+id/player_7_imageView"
+        android:layout_marginLeft="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="PLAYER HAS"
+        android:id="@+id/player_score1_textView"
+        android:layout_below="@+id/player_1_imageView"
+        android:layout_alignLeft="@+id/player_1_imageView"
+        android:layout_alignStart="@+id/player_1_imageView"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="13"
+        android:id="@+id/player_score_textView"
+        android:layout_alignTop="@+id/player_score1_textView"
+        android:layout_toRightOf="@+id/player_score1_textView"
+        android:layout_toEndOf="@+id/player_score1_textView"
+        android:layout_marginLeft="5dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HIT"
+        android:id="@+id/hit_button"
+        android:layout_below="@+id/player_score1_textView"
+        android:layout_alignLeft="@+id/player_score1_textView"
+        android:layout_alignStart="@+id/player_score1_textView"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="STAND"
+        android:id="@+id/stand_button"
+        android:layout_below="@+id/player_score1_textView"
+        android:layout_toRightOf="@+id/hit_button"
+        android:layout_toEndOf="@+id/hit_button"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="CASH: $"
+        android:id="@+id/cash_intro_textView"
+        android:layout_alignTop="@+id/cash_textView"
+        android:layout_toLeftOf="@+id/cash_textView"
+        android:layout_toStartOf="@+id/cash_textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="100"
+        android:id="@+id/cash_textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp" />
+
+</RelativeLayout>

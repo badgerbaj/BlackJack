@@ -17,7 +17,7 @@ public class Deck extends MainActivity {
     //private ArrayList<Integer> shuffleOrder;
     private int[] shuffleOrder;
     private int deckPosition;
-
+    private int deckCount;
 
     public HashMap<Integer, Integer> getDeck() {
         return deck;
@@ -29,6 +29,10 @@ public class Deck extends MainActivity {
 
     public int getDeckPosition() {
         return deckPosition;
+    }
+
+    public int getDeckCount() {
+        return deckCount;
     }
 
     public void setDeck(HashMap<Integer, Integer> deck) {
@@ -43,7 +47,11 @@ public class Deck extends MainActivity {
         this.deckPosition = deckPosition;
     }
 
-    public Deck() {
+    public void setDeckCount(int deckCount) {
+        this.deckCount = deckCount;
+    }
+
+    public Deck(int deckCount) {
         this.deck = new HashMap<>();
         this.deck.put(1, R.drawable.ace_clubs);
         this.deck.put(2, R.drawable.two_clubs);
@@ -98,23 +106,60 @@ public class Deck extends MainActivity {
         this.deck.put(51, R.drawable.queen_diamonds);
         this.deck.put(52, R.drawable.king_diamonds);
 
-        shuffleOrder = new int[CARD_COUNT];
-        shuffleOrder = shuffle();
+        this.deckCount = deckCount;
+        shuffle();
     }
 
-    private int[] shuffle(){
+    public void shuffle(){
+        this.deckPosition = 0;
+        this.shuffleOrder = new int[(CARD_COUNT * deckCount)];
+
+        int[] usageLimit = new int[CARD_COUNT];
         Random rn = new Random();
-        int[] shuffle = new int[CARD_COUNT];
         int newNum;
 
-        for(int i = 0; i < CARD_COUNT; i++){
+        for(int i = 0; i < (CARD_COUNT*deckCount); i++){
             newNum = rn.nextInt(CARD_COUNT) + 1;
-            while (!Arrays.asList(shuffle).contains(newNum)) {
+            while (usageLimit[(newNum-1)] > deckCount) {
                 newNum = rn.nextInt(CARD_COUNT) + 1;
             }
-
-            shuffle[i] = newNum;
+            usageLimit[(newNum-1)]++;
+            shuffleOrder[i] = newNum;
         }
-        return shuffle;
+    }
+
+    public int getCardValue(int card) {
+        int value = translateBaseThirteen(card);
+
+        if (value == 1) {
+            // Ace
+            return 1;
+        }
+        else if (value > 9) {
+            // Face Card
+            return 10;
+        }
+        else return value;
+    }
+
+    public int translateBaseThirteen(int card) {
+        int value = 0;
+        int subtract = 0;
+        int[] intArray = new int[CARD_COUNT];
+        for(int i=1; i <= CARD_COUNT; i++) { intArray[(i-1)] = i; }
+
+        for( int i : intArray ) {
+            if ((i % 13) == 0) {
+                if (i == card) {
+                    return (i - subtract);
+                }
+                subtract += 13;
+            } else {
+                if (i == card) {
+                    return (i - subtract);
+                }
+            }
+        }
+        return value;
     }
 }

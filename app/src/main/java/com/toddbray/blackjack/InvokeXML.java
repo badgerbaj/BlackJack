@@ -71,6 +71,9 @@ public class InvokeXML extends MainActivity {
                         case DECK_POSITION_KEY:
                             thisDeck.setDeckPosition(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
                             break;
+                        case PLAYER_CASH_KEY:
+                            thisDeck.setDeckPosition(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            break;
                     }
                 }
             }

@@ -10,6 +10,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final String SHUFFLE_KEY = "shuffle";
     public static final String DECK_POSITION_KEY = "deckposition";
+    public static final String PLAYER_CASH_KEY = "playercash";
+    public static final String PLAYER_SCORE_KEY = "playerscore";
+    public static final String DEALER_SCORE_KEY = "dealerscore";
+    public static final String BET_AMOUNT_KEY = "betamount";
     public final int CARD_COUNT = 52;
 
     @Override

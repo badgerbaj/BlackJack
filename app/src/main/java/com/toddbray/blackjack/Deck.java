@@ -14,7 +14,6 @@ import java.util.Random;
 public class Deck extends MainActivity {
 
     private HashMap<Integer, Integer> deck;
-    //private ArrayList<Integer> shuffleOrder;
     private int[] shuffleOrder;
     private int deckPosition;
     private int deckCount;
@@ -51,7 +50,7 @@ public class Deck extends MainActivity {
         this.deckCount = deckCount;
     }
 
-    public Deck(int deckCount) {
+    public Deck() {
         this.deck = new HashMap<>();
         this.deck.put(1, R.drawable.ace_clubs);
         this.deck.put(2, R.drawable.two_clubs);
@@ -106,12 +105,11 @@ public class Deck extends MainActivity {
         this.deck.put(51, R.drawable.queen_diamonds);
         this.deck.put(52, R.drawable.king_diamonds);
 
-        this.deckCount = deckCount;
-        shuffle();
     }
 
-    public void shuffle(){
+    public void shuffle(int deckCount){
         this.deckPosition = 0;
+        this.deckCount = deckCount;
         this.shuffleOrder = new int[(CARD_COUNT * deckCount)];
 
         int[] usageLimit = new int[CARD_COUNT];

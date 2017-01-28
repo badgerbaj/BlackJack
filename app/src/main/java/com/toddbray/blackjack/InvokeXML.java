@@ -50,29 +50,43 @@ public class InvokeXML extends MainActivity {
 
             NodeList nl;
             nl = doc.getElementsByTagName(XML_GAMEPLAY);
-            Deck thisDeck = new Deck();
-            int[] shuffle = new int[CARD_COUNT];
+
+            int[] shuffle;
+            shuffle = new int[CARD_COUNT];
 
             for(int i = 0; i < nl.getLength(); i++)
             {
                 for(int ii = 0; ii < nl.item(i).getChildNodes().getLength(); ii++)
                 {
                     switch (nl.item(i).getChildNodes().item(ii).getNodeName()) {
+                        case DECK_POSITION_KEY:
+                            playDeck.setDeckPosition(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            break;
+                        case PLAYER_CASH_KEY:
+                            playGame.setPlayerCash(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            break;
+                        case PLAYER_SCORE_KEY:
+                            playGame.setPlayerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            break;
+                        case DEALER_SCORE_KEY:
+                            playGame.setDealerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            break;
+                        case BET_AMOUNT_KEY:
+                            playGame.setDealerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            break;
                         case SHUFFLE_KEY:
                             for(
                                     int iii = 0;
                                     iii < nl.item(i).getChildNodes().item(ii).getChildNodes().getLength();
                                     iii++) {
-                                shuffle[iii] = Integer.parseInt(nl.item(i).getChildNodes()
+                                if((nl.item(i).getChildNodes().item(ii).getChildNodes().item(iii).getNodeName()) == DECK_COUNT_KEY) {
+                                    playDeck.setDeckCount(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                                    shuffle = new int[(CARD_COUNT * (playDeck.getDeckCount()))];
+                                }
+                                else shuffle[iii] = Integer.parseInt(nl.item(i).getChildNodes()
                                         .item(ii).getChildNodes().item(iii).getTextContent());
                             }
-                            thisDeck.setShuffleOrder(shuffle);
-                            break;
-                        case DECK_POSITION_KEY:
-                            thisDeck.setDeckPosition(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
-                            break;
-                        case PLAYER_CASH_KEY:
-                            thisDeck.setDeckPosition(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            playDeck.setShuffleOrder(shuffle);
                             break;
                     }
                 }
@@ -91,7 +105,7 @@ public class InvokeXML extends MainActivity {
         return false;
     }
 
-    public void saveToXML(Deck thisDeck) {
+    public void saveToXML() {
         Document dom;
         Element newDeck;
         Element e;
@@ -110,12 +124,34 @@ public class InvokeXML extends MainActivity {
             // build gameplay element
             newDeck = dom.createElement(XML_GAMEPLAY);
 
-            e = dom.createElement(DECK_POSITION_KEY);
-            e.appendChild(dom.createTextNode("" + thisDeck.getDeckPosition()));
+            e = dom.createElement(DECK_COUNT_KEY);
+            e.appendChild(dom.createTextNode("" + playDeck.getDeckPosition()));
             newDeck.appendChild(e);
 
+            e = dom.createElement(PLAYER_CASH_KEY);
+            e.appendChild(dom.createTextNode("" + playGame.getPlayerCash()));
+            newDeck.appendChild(e);
+
+            e = dom.createElement(PLAYER_SCORE_KEY);
+            e.appendChild(dom.createTextNode("" + playGame.getPlayerScore()));
+            newDeck.appendChild(e);
+
+            e = dom.createElement(DEALER_SCORE_KEY);
+            e.appendChild(dom.createTextNode("" + playGame.getDealerScore()));
+            newDeck.appendChild(e);
+
+            e = dom.createElement(BET_AMOUNT_KEY);
+            e.appendChild(dom.createTextNode("" + playGame.getBetAmount()));
+            newDeck.appendChild(e);
+
+            // TODO: Build DECK_POSITION_KEY under a SHUFFLE_KEY element
+            // TODO: Add NUMBER_KEY elements per shuffled deck entry
             e = dom.createElement(SHUFFLE_KEY);
-            //e.appendChild(dom.createTextNode(thisDeck.getShuffleOrder()));
+            //e.appendChild(dom.createTextNode(playDeck.getShuffleOrder()));
+            newDeck.appendChild(e);
+
+            e = dom.createElement(DECK_POSITION_KEY);
+            e.appendChild(dom.createTextNode("" + playDeck.getDeckPosition()));
             newDeck.appendChild(e);
 
 

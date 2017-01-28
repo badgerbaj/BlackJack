@@ -5,7 +5,7 @@ package com.toddbray.blackjack;
  *
  */
 
-public class Gamestate extends MainActivity {
+public class GameState extends MainActivity {
 
     private int playerScore;
     private int dealerScore;
@@ -44,7 +44,7 @@ public class Gamestate extends MainActivity {
         this.betAmount = betAmount;
     }
 
-    public Gamestate() {
+    public GameState() {
         startNew();
     }
 

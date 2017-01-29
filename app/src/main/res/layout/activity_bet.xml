@@ -2,18 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="PLACE YOUR BET"
-        android:id="@+id/bet_textView"
-        android:layout_gravity="center_horizontal"
-        android:layout_above="@+id/tableLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp" />
+    android:weightSum="1"
+    android:background="#355e3b">
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -25,6 +15,63 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#000000">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="CASH:"
+                android:id="@+id/money_label_textView"
+                android:layout_above="@+id/bet_textView"
+                android:textStyle="bold|italic"
+                android:textSize="36sp"
+                android:layout_marginBottom="5dp"
+                android:layout_column="0"
+                android:textAlignment="center"
+                android:layout_marginTop="5dp"
+                android:textColor="#e5c100" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="100"
+                android:id="@+id/money_textView"
+                android:layout_above="@+id/bet_textView"
+                android:textStyle="bold|italic"
+                android:textSize="36sp"
+                android:layout_marginBottom="5dp"
+                android:layout_column="1"
+                android:textAlignment="center"
+                android:layout_marginTop="5dp"
+                android:textColor="#e5c100" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="PLACE YOUR BET"
+                android:id="@+id/bet_textView"
+                android:layout_gravity="center_horizontal"
+                android:layout_above="@+id/tableLayout"
+                android:layout_centerHorizontal="true"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:layout_span="2"
+                android:textColor="#FFFFFF" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
             <ImageButton
@@ -32,7 +79,10 @@
                 android:layout_height="150dp"
                 android:scaleType="fitCenter"
                 android:id="@+id/one_dollar_imageButton"
-                android:src="@drawable/one_dollar" />
+                android:src="@drawable/one_dollar_chip"
+                android:background="#355e3b"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp" />
 
             <ImageButton
                 android:layout_width="150dp"
@@ -40,7 +90,10 @@
                 android:scaleType="fitCenter"
                 android:id="@+id/five_dollar_imageButton"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/five_dollar" />
+                android:src="@drawable/five_dollar_chip"
+                android:background="#355e3b"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp" />
         </TableRow>
 
         <TableRow
@@ -52,14 +105,20 @@
                 android:layout_height="150dp"
                 android:scaleType="fitCenter"
                 android:id="@+id/ten_dollar_imageButton"
-                android:src="@drawable/ten_dollar" />
+                android:src="@drawable/ten_dollar_chip"
+                android:background="#355e3b"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp" />
 
             <ImageButton
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:scaleType="fitCenter"
                 android:id="@+id/twenty_dollar_imageButton"
-                android:src="@drawable/twenty_dollar" />
+                android:background="#355e3b"
+                android:src="@drawable/twenty_dollar_chip"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp" />
         </TableRow>
 
     </TableLayout>

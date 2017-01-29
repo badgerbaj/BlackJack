@@ -9,7 +9,7 @@ import android.view.View;
  *
  */
 
-public class activity_game extends AppCompatActivity implements View.OnClickListener {
+public class activity_game extends MainActivity implements View.OnClickListener {
     // TODO accept intent data from activity_bet
 
     @Override

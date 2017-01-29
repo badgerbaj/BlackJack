@@ -1,17 +1,21 @@
 package com.toddbray.blackjack;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
 
 /**
  * Created by Brad on 1/28/2017.
  *
  */
 
-public class activity_bet extends AppCompatActivity implements View.OnClickListener {
+public class activity_bet extends MainActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,32 +25,40 @@ public class activity_bet extends AppCompatActivity implements View.OnClickListe
                 R.id.ten_dollar_imageButton, R.id.twenty_dollar_imageButton };
         for( int id : buttonIds)
         {
-            Button b = (Button) findViewById(id);
+            ImageButton b = (ImageButton) findViewById(id);
             b.setOnClickListener(this);
         }
+
+        TextView tv_Cash = (TextView) findViewById(R.id.money_textView);
+        tv_Cash.setText("" + playGame.getPlayerCash());
     }
 
     @Override
     public void onClick(View v) {
+
+        //TODO: Validate the player has the required cash
         Intent iActivity_Game = new Intent(getApplicationContext(), activity_game.class);
 
         switch(v.getId()) {
             case R.id.one_dollar_imageButton:
                 //
-
+                playGame.setPlayerCash(playGame.getPlayerCash() - BET_AMOUNT_ONE);
+                playGame.setBetAmount(BET_AMOUNT_ONE);
                 break;
             case R.id.five_dollar_imageButton:
                 //
-
+                playGame.setPlayerCash(playGame.getPlayerCash() - BET_AMOUNT_FIVE);
+                playGame.setBetAmount(BET_AMOUNT_FIVE);
                 break;
             case R.id.ten_dollar_imageButton:
                 //
-
-
+                playGame.setPlayerCash(playGame.getPlayerCash() - BET_AMOUNT_TEN);
+                playGame.setBetAmount(BET_AMOUNT_TEN);
                 break;
             case R.id.twenty_dollar_imageButton:
                 //
-
+                playGame.setPlayerCash(playGame.getPlayerCash() - BET_AMOUNT_TWENTY);
+                playGame.setBetAmount(BET_AMOUNT_TWENTY);
                 break;
         }
 

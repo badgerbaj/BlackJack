@@ -10,7 +10,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final String SHUFFLE_KEY = "shuffle";
     public static final String DECK_POSITION_KEY = "deckposition";
+    public static final String DECK_COUNT_KEY = "deckcount";
+    public static final String PLAYER_CASH_KEY = "playercash";
+    public static final String PLAYER_SCORE_KEY = "playerscore";
+    public static final String DEALER_SCORE_KEY = "dealerscore";
+    public static final String BET_AMOUNT_KEY = "betamount";
+    public static final String NUMBER_KEY = "number";
     public final int CARD_COUNT = 52;
+
+    public Deck playDeck;
+    public GameState playGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             b.setOnClickListener(this);
         }
 
+        playDeck = new Deck();
+        playGame = new GameState();
     }
 
     @Override

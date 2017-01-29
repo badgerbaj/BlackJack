@@ -9,16 +9,41 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.toddbray.blackjack.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ImageView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/imageView"
+        android:src="@drawable/blackjack_main"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="PLAY BLACKJACK"
+        android:text="START NEW GAME"
         android:id="@+id/play_button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#e5c100"
+        android:background="#000000" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CONTINUE GAME"
+        android:id="@+id/continue_button"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#e5c100"
+        android:background="#000000"
+        android:layout_below="@+id/play_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp" />
+
+
 </RelativeLayout>

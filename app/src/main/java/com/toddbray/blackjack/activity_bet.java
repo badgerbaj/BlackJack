@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 /**
@@ -29,14 +30,15 @@ public class activity_bet extends MainActivity implements View.OnClickListener {
             b.setOnClickListener(this);
         }
 
-        TextView tv_Cash = (TextView) findViewById(R.id.money_textView);
-        tv_Cash.setText("" + playGame.getPlayerCash());
+        TextView tv_Money = (TextView) findViewById(R.id.money_textView);
+        tv_Money.setText(String.valueOf(playGame.getPlayerCash()));
     }
 
     @Override
     public void onClick(View v) {
 
         //TODO: Validate the player has the required cash
+        //TODO: Pass playGame data as intent
         Intent iActivity_Game = new Intent(getApplicationContext(), activity_game.class);
 
         switch(v.getId()) {
@@ -44,6 +46,7 @@ public class activity_bet extends MainActivity implements View.OnClickListener {
                 //
                 playGame.setPlayerCash(playGame.getPlayerCash() - BET_AMOUNT_ONE);
                 playGame.setBetAmount(BET_AMOUNT_ONE);
+                //Toast.makeText(this, "Player Cash: " + MainActivity.playGame.getPlayerCash(), Toast.LENGTH_LONG).show();
                 break;
             case R.id.five_dollar_imageButton:
                 //

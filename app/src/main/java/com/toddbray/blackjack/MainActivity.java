@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final int BET_AMOUNT_FIVE = 5;
     public static final int BET_AMOUNT_TEN = 10;
     public static final int BET_AMOUNT_TWENTY = 20;
+    public static final int MAX_HAND = 8;
 
     public Deck playDeck;
     public GameState playGame;

@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/tableLayout">
+        android:id="@+id/tableLayout"
+        android:orientation="vertical">
 
         <TableRow
             android:layout_width="match_parent"
@@ -81,10 +82,10 @@
                 android:layout_height="150dp"
                 android:scaleType="fitCenter"
                 android:id="@+id/one_dollar_imageButton"
-
                 android:background="#355e3b"
                 android:layout_marginBottom="5dp"
-                android:layout_marginRight="5dp" />
+                android:layout_marginRight="5dp"
+                android:src="@drawable/one_dollar_chip" />
 
             <ImageButton
                 android:layout_width="150dp"
@@ -92,10 +93,10 @@
                 android:scaleType="fitCenter"
                 android:id="@+id/five_dollar_imageButton"
                 android:layout_gravity="center_horizontal"
-
                 android:background="#355e3b"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/five_dollar_chip" />
         </TableRow>
 
         <TableRow
@@ -107,10 +108,10 @@
                 android:layout_height="150dp"
                 android:scaleType="fitCenter"
                 android:id="@+id/ten_dollar_imageButton"
-
                 android:background="#355e3b"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp" />
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ten_dollar_chip" />
 
             <ImageButton
                 android:layout_width="150dp"
@@ -118,9 +119,9 @@
                 android:scaleType="fitCenter"
                 android:id="@+id/twenty_dollar_imageButton"
                 android:background="#355e3b"
-
                 android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/twenty_dollar_chip" />
         </TableRow>
 
     </TableLayout>

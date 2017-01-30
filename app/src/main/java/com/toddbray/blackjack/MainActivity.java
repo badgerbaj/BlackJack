@@ -50,12 +50,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.play_button:
                 // Call About_App
                 Intent iActivity_Bet = new Intent(getApplicationContext(), activity_bet.class);
+                iActivity_Bet.putExtra(PLAYER_CASH_KEY, playGame.getPlayerCash());
                 startActivity(iActivity_Bet);
                 break;
             case R.id.continue_button:
 
                 if(playGame.getPlayerScore() > 0 && playGame.getPlayerCash() > 0) {
                     Intent iActivity_Game = new Intent(getApplicationContext(), activity_game.class);
+
                     startActivity(iActivity_Game);
                 }
                 else {

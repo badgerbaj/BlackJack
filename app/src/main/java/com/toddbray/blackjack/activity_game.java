@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,27 +19,37 @@ import java.util.HashMap;
 
 public class activity_game extends MainActivity implements View.OnClickListener {
 
+    private HashMap<Integer, Integer> playerCards;
+    private HashMap<Integer, Integer> dealerCards;
+
+    private TextView tv_PlayerScore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        //TODO: get playGame data as intent
+        Bundle extras = getIntent().getExtras();
+
+        if(extras != null) {
+            playGame.setPlayerCash(extras.getInt(PLAYER_CASH_KEY));
+            playGame.setBetAmount(extras.getInt(BET_AMOUNT_KEY));
+        }
 
         int[] imageViewDealerIds = {R.id.dealer_1_imageView, R.id.dealer_2_imageView, R.id.dealer_3_imageView,
             R.id.dealer_4_imageView, R.id.dealer_5_imageView, R.id.dealer_6_imageView, R.id.dealer_7_imageView,
             R.id.dealer_8_imageView};
-        HashMap<Integer, Integer> dealerCards = new HashMap<Integer, Integer>();
+        dealerCards = new HashMap<Integer, Integer>();
         for(int i=0; i < MAX_HAND; i++) {
-            dealerCards.put(playGame.getDealerHand()[i], imageViewDealerIds[i]);
+            dealerCards.put(i, imageViewDealerIds[i]);
         }
 
         int[] imageViewPlayerIds = {R.id.player_1_imageView, R.id.player_2_imageView, R.id.player_3_imageView,
                 R.id.player_4_imageView, R.id.player_5_imageView, R.id.player_6_imageView, R.id.player_7_imageView,
                 R.id.player_8_imageView};
-        HashMap<Integer, Integer> playerCards = new HashMap<Integer, Integer>();
+        playerCards = new HashMap<Integer, Integer>();
         for(int i=0; i < MAX_HAND; i++) {
-            playerCards.put(playGame.getPlayerHand()[i], imageViewPlayerIds[i]);
+            playerCards.put(i, imageViewPlayerIds[i]);
         }
 
         TextView tv_Cash = (TextView) findViewById(R.id.cash_textView);
@@ -47,7 +58,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         TextView tv_DealerScore = (TextView) findViewById(R.id.dealer_score_textView);
         tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
 
-        TextView tv_PlayerScore = (TextView) findViewById(R.id.player_score_textView);
+        tv_PlayerScore = (TextView) findViewById(R.id.player_score_textView);
         tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
 
         int[] buttonIds = {R.id.hit_button, R.id.stand_button };
@@ -56,10 +67,49 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             Button b = (Button) findViewById(id);
             b.setOnClickListener(this);
         }
+
+        playDeck.shuffle(1);
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(this, "Player Cash: " + playGame.getPlayerCash(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Player Cash: " + playGame.getPlayerCash(), Toast.LENGTH_LONG).show();
+        switch(v.getId()) {
+            case R.id.hit_button:
+
+                for(int i = 0; i < MAX_HAND; i++) {
+                    if(playGame.getPlayerHand()[i] == 0) {
+
+                        // Draw the next card in the shuffled deck
+                        ImageView iv = (ImageView) findViewById(playerCards.get(i));
+                        iv.setImageResource(playDeck.getDeck().get(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]));
+
+                        // Move to the next card in the shuffled deck
+                        playDeck.incrementDeckPosition();
+
+                        // Add drawn card to hand
+                        playGame.setPlayerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+
+                        // Calculate Score
+                        int tally = playGame.getPlayerScore();
+                        tally += playDeck.getCardValue(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+                        playGame.setPlayerScore(tally);
+
+                        // Display New Score
+                        tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
+
+                        // TODO: Handle bust and BlackJack
+
+                        // Exit Loop Early
+                        i = MAX_HAND;
+                    }
+            }
+
+                break;
+            case R.id.stand_button:
+
+
+                break;
+        }
     }
 }

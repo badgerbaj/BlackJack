@@ -22,6 +22,12 @@ public class activity_bet extends MainActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bet);
 
+        Bundle extras = getIntent().getExtras();
+
+        if(extras != null) {
+            playGame.setPlayerCash(extras.getInt(PLAYER_CASH_KEY));
+        }
+
         int[] buttonIds = {R.id.one_dollar_imageButton, R.id.five_dollar_imageButton,
                 R.id.ten_dollar_imageButton, R.id.twenty_dollar_imageButton };
         for( int id : buttonIds)
@@ -44,8 +50,8 @@ public class activity_bet extends MainActivity implements View.OnClickListener {
         switch(v.getId()) {
             case R.id.one_dollar_imageButton:
                 //
-                playGame.setPlayerCash(playGame.getPlayerCash() - BET_AMOUNT_ONE);
-                playGame.setBetAmount(BET_AMOUNT_ONE);
+                iActivity_Game.putExtra(PLAYER_CASH_KEY, (playGame.getPlayerCash() - BET_AMOUNT_ONE));
+                iActivity_Game.putExtra(BET_AMOUNT_KEY, BET_AMOUNT_ONE);
                 //Toast.makeText(this, "Player Cash: " + MainActivity.playGame.getPlayerCash(), Toast.LENGTH_LONG).show();
                 break;
             case R.id.five_dollar_imageButton:

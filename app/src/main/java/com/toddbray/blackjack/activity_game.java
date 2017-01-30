@@ -42,7 +42,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         }
 
         TextView tv_Cash = (TextView) findViewById(R.id.cash_textView);
-        tv_Cash.setText(String.valueOf(MainActivity.playGame.getPlayerCash()));
+        tv_Cash.setText(String.valueOf(playGame.getPlayerCash()));
 
         TextView tv_DealerScore = (TextView) findViewById(R.id.dealer_score_textView);
         tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
@@ -60,6 +60,6 @@ public class activity_game extends MainActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(this, "Player Cash: " + MainActivity.playGame.getPlayerCash(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Player Cash: " + playGame.getPlayerCash(), Toast.LENGTH_LONG).show();
     }
 }

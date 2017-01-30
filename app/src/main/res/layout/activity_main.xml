@@ -16,7 +16,8 @@
 
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/blackjack_main" />
 
     <Button
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/imageView"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="#e5c100"
         android:background="#000000" />
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:text="CONTINUE GAME"
         android:id="@+id/continue_button"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="#e5c100"
         android:background="#000000"

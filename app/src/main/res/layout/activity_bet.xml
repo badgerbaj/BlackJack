@@ -81,7 +81,7 @@
                 android:layout_height="150dp"
                 android:scaleType="fitCenter"
                 android:id="@+id/one_dollar_imageButton"
-                android:src="@drawable/one_dollar_chip"
+
                 android:background="#355e3b"
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="5dp" />
@@ -92,7 +92,7 @@
                 android:scaleType="fitCenter"
                 android:id="@+id/five_dollar_imageButton"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/five_dollar_chip"
+
                 android:background="#355e3b"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp" />
@@ -107,7 +107,7 @@
                 android:layout_height="150dp"
                 android:scaleType="fitCenter"
                 android:id="@+id/ten_dollar_imageButton"
-                android:src="@drawable/ten_dollar_chip"
+
                 android:background="#355e3b"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp" />
@@ -118,7 +118,7 @@
                 android:scaleType="fitCenter"
                 android:id="@+id/twenty_dollar_imageButton"
                 android:background="#355e3b"
-                android:src="@drawable/twenty_dollar_chip"
+
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp" />
         </TableRow>

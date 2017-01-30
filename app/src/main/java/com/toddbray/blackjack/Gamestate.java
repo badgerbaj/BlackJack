@@ -1,5 +1,7 @@
 package com.toddbray.blackjack;
 
+import java.util.List;
+
 /**
  * Created by Brad on 1/28/2017.
  *
@@ -11,7 +13,10 @@ public class GameState extends MainActivity {
     private int dealerScore;
     private int playerCash;
     private int betAmount;
+    private int[] dealerHand;
+    private int[] playerHand;
 
+    // Getters
     public int getPlayerScore() {
         return playerScore;
     }
@@ -28,6 +33,12 @@ public class GameState extends MainActivity {
         return betAmount;
     }
 
+    public int[] getDealerHand() { return dealerHand; }
+
+    public int[] getPlayerHand() { return playerHand; }
+
+
+    // Setters
     public void setPlayerScore(int playerScore) {
         this.playerScore = playerScore;
     }
@@ -44,15 +55,27 @@ public class GameState extends MainActivity {
         this.betAmount = betAmount;
     }
 
+    public void setDealerHand(int[] dealerHand) { this.dealerHand = dealerHand; }
+
+    public void setPlayerHand(int[] playerHand) { this.dealerHand = playerHand; }
+
+    // Constructor
     public GameState() {
+        dealerHand = new int[MAX_HAND];
+        playerHand = new int[MAX_HAND];
         startNew();
     }
 
+    // Helpers
     public void startNew() {
         playerScore = 0;
         dealerScore = 0;
         playerCash = 20;
         betAmount = 0;
+        for(int i = 0; i < MAX_HAND; i++) {
+            dealerHand[i] = 0;
+            playerHand[i] = 0;
+        }
     }
 
 }

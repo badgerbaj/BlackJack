@@ -23,6 +23,8 @@ public class activity_game extends MainActivity implements View.OnClickListener 
     private HashMap<Integer, Integer> dealerCards;
 
     private TextView tv_PlayerScore;
+    private TextView tv_DealerScore;
+    private TextView tv_Cash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +54,10 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             playerCards.put(i, imageViewPlayerIds[i]);
         }
 
-        TextView tv_Cash = (TextView) findViewById(R.id.cash_textView);
+        tv_Cash = (TextView) findViewById(R.id.cash_textView);
         tv_Cash.setText(String.valueOf(playGame.getPlayerCash()));
 
-        TextView tv_DealerScore = (TextView) findViewById(R.id.dealer_score_textView);
+        tv_DealerScore = (TextView) findViewById(R.id.dealer_score_textView);
         tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
 
         tv_PlayerScore = (TextView) findViewById(R.id.player_score_textView);
@@ -84,9 +86,6 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                         ImageView iv = (ImageView) findViewById(playerCards.get(i));
                         iv.setImageResource(playDeck.getDeck().get(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]));
 
-                        // Move to the next card in the shuffled deck
-                        playDeck.incrementDeckPosition();
-
                         // Add drawn card to hand
                         playGame.setPlayerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
 
@@ -100,14 +99,48 @@ public class activity_game extends MainActivity implements View.OnClickListener 
 
                         // TODO: Handle bust and BlackJack
 
+                        // Move to the next card in the shuffled deck
+                        playDeck.incrementDeckPosition();
+
                         // Exit Loop Early
                         i = MAX_HAND;
                     }
-            }
+                }
 
                 break;
             case R.id.stand_button:
 
+                while(playGame.getDealerScore() <= 17) {
+
+                    for(int i = 0; i < MAX_HAND; i++) {
+                        if(playGame.getDealerHand()[i] == 0) {
+
+                            // Draw the next card in the shuffled deck
+                            ImageView iv = (ImageView) findViewById(dealerCards.get(i));
+                            iv.setImageResource(playDeck.getDeck().get(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]));
+
+                            // Add drawn card to hand
+                            playGame.setDealerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+
+                            // Calculate Score
+                            int tally = playGame.getDealerScore();
+                            tally += playDeck.getCardValue(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+                            playGame.setDealerScore(tally);
+
+                            // Display New Score
+                            tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
+
+                            // TODO: Handle bust and BlackJack
+
+                            // Move to the next card in the shuffled deck
+                            playDeck.incrementDeckPosition();
+
+                            // Exit Loop Early
+                            i = MAX_HAND;
+                        }
+                    }
+
+                }
 
                 break;
         }

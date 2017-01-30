@@ -52,22 +52,22 @@ public class activity_bet extends MainActivity implements View.OnClickListener {
                 //
                 iActivity_Game.putExtra(PLAYER_CASH_KEY, (playGame.getPlayerCash() - BET_AMOUNT_ONE));
                 iActivity_Game.putExtra(BET_AMOUNT_KEY, BET_AMOUNT_ONE);
-                //Toast.makeText(this, "Player Cash: " + MainActivity.playGame.getPlayerCash(), Toast.LENGTH_LONG).show();
+
                 break;
             case R.id.five_dollar_imageButton:
                 //
-                playGame.setPlayerCash(playGame.getPlayerCash() - BET_AMOUNT_FIVE);
-                playGame.setBetAmount(BET_AMOUNT_FIVE);
+                iActivity_Game.putExtra(PLAYER_CASH_KEY, (playGame.getPlayerCash() - BET_AMOUNT_FIVE));
+                iActivity_Game.putExtra(BET_AMOUNT_KEY, BET_AMOUNT_FIVE);
                 break;
             case R.id.ten_dollar_imageButton:
                 //
-                playGame.setPlayerCash(playGame.getPlayerCash() - BET_AMOUNT_TEN);
-                playGame.setBetAmount(BET_AMOUNT_TEN);
+                iActivity_Game.putExtra(PLAYER_CASH_KEY, (playGame.getPlayerCash() - BET_AMOUNT_TEN));
+                iActivity_Game.putExtra(BET_AMOUNT_KEY, BET_AMOUNT_TEN);
                 break;
             case R.id.twenty_dollar_imageButton:
                 //
-                playGame.setPlayerCash(playGame.getPlayerCash() - BET_AMOUNT_TWENTY);
-                playGame.setBetAmount(BET_AMOUNT_TWENTY);
+                iActivity_Game.putExtra(PLAYER_CASH_KEY, (playGame.getPlayerCash() - BET_AMOUNT_TWENTY));
+                iActivity_Game.putExtra(BET_AMOUNT_KEY, BET_AMOUNT_TWENTY);
                 break;
         }
 

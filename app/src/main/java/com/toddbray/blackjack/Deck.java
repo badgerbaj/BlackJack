@@ -46,6 +46,8 @@ public class Deck extends MainActivity {
         this.deckPosition = deckPosition;
     }
 
+    public void incrementDeckPosition() { this.deckPosition++; }
+
     public void setDeckCount(int deckCount) {
         this.deckCount = deckCount;
     }

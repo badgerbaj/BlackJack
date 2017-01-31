@@ -59,6 +59,10 @@ public class GameState extends MainActivity {
 
     public void setPlayerHand(int[] playerHand) { this.dealerHand = playerHand; }
 
+    public void setPlayerHandPos(int pos, int value) { this.playerHand[pos] = value; }
+
+    public void setDealerHandPos(int pos, int value) { this.dealerHand[pos] = value; }
+
     // Constructor
     public GameState() {
         dealerHand = new int[MAX_HAND];

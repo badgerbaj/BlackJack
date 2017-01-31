@@ -150,6 +150,52 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         // Move to the next card in the shuffled deck
         playDeck.incrementDeckPosition();
 
+        if(tally == 21 && dealer_tally == 21){
+            iv = (ImageView) findViewById(dealerCards.get(1));
+            iv.setImageResource(downcard);
+            tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
+            Button b = (Button) findViewById(R.id.hit_button);
+            b.setVisibility(View.INVISIBLE);
+            b = (Button) findViewById(R.id.stand_button);
+            b.setVisibility(View.INVISIBLE);
+            b = (Button) findViewById(R.id.next_button);
+            b.setVisibility(View.VISIBLE);
+            TextView tv = (TextView) findViewById(R.id.result_textView);
+            tv.setText("PUSH");
+            tv.setVisibility(View.VISIBLE);
+        }
+
+        else
+
+        if(tally == 21){
+            Button b = (Button) findViewById(R.id.hit_button);
+            b.setVisibility(View.INVISIBLE);
+            b = (Button) findViewById(R.id.stand_button);
+            b.setVisibility(View.INVISIBLE);
+            b = (Button) findViewById(R.id.next_button);
+            b.setVisibility(View.VISIBLE);
+            TextView tv = (TextView) findViewById(R.id.result_textView);
+            tv.setText("BLACKJACK!");
+            tv.setVisibility(View.VISIBLE);
+        }
+
+        else
+
+        if(dealer_tally == 21){
+            iv = (ImageView) findViewById(dealerCards.get(1));
+            iv.setImageResource(downcard);
+            tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
+            Button b = (Button) findViewById(R.id.hit_button);
+            b.setVisibility(View.INVISIBLE);
+            b = (Button) findViewById(R.id.stand_button);
+            b.setVisibility(View.INVISIBLE);
+            b = (Button) findViewById(R.id.next_button);
+            b.setVisibility(View.VISIBLE);
+            TextView tv = (TextView) findViewById(R.id.result_textView);
+            tv.setText("DEALER HAS BLACKJACK");
+            tv.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -176,7 +222,18 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                         // Display New Score
                         tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
 
-                        // TODO: Handle bust and BlackJack
+                        if(playGame.getPlayerScore() > 21) {
+                            Button b = (Button) findViewById(R.id.hit_button);
+                            b.setVisibility(View.INVISIBLE);
+                            b = (Button) findViewById(R.id.stand_button);
+                            b.setVisibility(View.INVISIBLE);
+                            b = (Button) findViewById(R.id.next_button);
+                            b.setVisibility(View.VISIBLE);
+                            TextView tv = (TextView) findViewById(R.id.result_textView);
+                            tv.setText("You BUSTED");
+                            tv.setVisibility(View.VISIBLE);
+                            break;
+                        }
 
                         // Move to the next card in the shuffled deck
                         playDeck.incrementDeckPosition();
@@ -188,6 +245,12 @@ public class activity_game extends MainActivity implements View.OnClickListener 
 
                 break;
             case R.id.stand_button:
+
+                Button b = (Button) findViewById(R.id.hit_button);
+                b.setVisibility(View.INVISIBLE);
+
+                b = (Button) findViewById(R.id.stand_button);
+                b.setVisibility(View.INVISIBLE);
 
                 ImageView iv = (ImageView) findViewById(dealerCards.get(1));
                 iv.setImageResource(downcard);
@@ -215,7 +278,12 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                             // Display New Score
                             tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
 
-                            // TODO: Handle bust and BlackJack
+                            if(playGame.getDealerScore() > 21) {
+                                TextView tv = (TextView) findViewById(R.id.result_textView);
+                                tv.setText("Dealer BUSTS, You Win");
+                                tv.setVisibility(View.VISIBLE);
+                                break;
+                            }
 
                             // Move to the next card in the shuffled deck
                             playDeck.incrementDeckPosition();
@@ -225,9 +293,48 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                         }
                     }
 
+
                 }
 
-                break;
+                if(playGame.getPlayerScore() > playGame.getDealerScore() && playGame.getPlayerScore() <= 21 && playGame.getDealerScore() <= 21){
+                    b = (Button) findViewById(R.id.hit_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.stand_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.next_button);
+                    b.setVisibility(View.VISIBLE);
+                    TextView tv = (TextView) findViewById(R.id.result_textView);
+                    tv.setText("YOU WIN");
+                    tv.setVisibility(View.VISIBLE);
+                    break;
+                }
+
+                if(playGame.getPlayerScore() < playGame.getDealerScore() && playGame.getPlayerScore() <= 21 && playGame.getDealerScore() <= 21){
+                    b = (Button) findViewById(R.id.hit_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.stand_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.next_button);
+                    b.setVisibility(View.VISIBLE);
+                    TextView tv = (TextView) findViewById(R.id.result_textView);
+                    tv.setText("DEALER WINS");
+                    tv.setVisibility(View.VISIBLE);
+                    break;
+            }
+
+                if(playGame.getPlayerScore() == playGame.getDealerScore() && playGame.getPlayerScore() <= 21 && playGame.getDealerScore() <= 21){
+                    b = (Button) findViewById(R.id.hit_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.stand_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.next_button);
+                    b.setVisibility(View.VISIBLE);
+                    TextView tv = (TextView) findViewById(R.id.result_textView);
+                    tv.setText("PUSH");
+                    tv.setVisibility(View.VISIBLE);
+                    break;
+                }
+
         }
     }
 }

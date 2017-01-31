@@ -110,7 +110,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                 break;
             case R.id.stand_button:
 
-                while(playGame.getDealerScore() <= 17) {
+                while(playGame.getDealerScore() < 17) {
 
                     for(int i = 0; i < MAX_HAND; i++) {
                         if(playGame.getDealerHand()[i] == 0) {

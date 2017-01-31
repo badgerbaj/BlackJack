@@ -64,7 +64,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         tv_PlayerScore = (TextView) findViewById(R.id.player_score_textView);
         tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
 
-        int[] buttonIds = {R.id.hit_button, R.id.stand_button };
+        int[] buttonIds = {R.id.hit_button, R.id.stand_button, R.id.next_button };
         for( int id : buttonIds)
         {
             Button b = (Button) findViewById(id);
@@ -163,6 +163,8 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             TextView tv = (TextView) findViewById(R.id.result_textView);
             tv.setText("PUSH");
             tv.setVisibility(View.VISIBLE);
+            int winnings = playGame.getBetAmount();
+            playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
         }
 
         else
@@ -177,6 +179,8 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             TextView tv = (TextView) findViewById(R.id.result_textView);
             tv.setText("BLACKJACK!");
             tv.setVisibility(View.VISIBLE);
+            int winnings = playGame.getBetAmount() * 2;
+            playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
         }
 
         else
@@ -278,13 +282,6 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                             // Display New Score
                             tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
 
-                            if(playGame.getDealerScore() > 21) {
-                                TextView tv = (TextView) findViewById(R.id.result_textView);
-                                tv.setText("Dealer BUSTS, You Win");
-                                tv.setVisibility(View.VISIBLE);
-                                break;
-                            }
-
                             // Move to the next card in the shuffled deck
                             playDeck.incrementDeckPosition();
 
@@ -294,6 +291,21 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     }
 
 
+                }
+
+                if(playGame.getDealerScore() > 21) {
+                    b = (Button) findViewById(R.id.hit_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.stand_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.next_button);
+                    b.setVisibility(View.VISIBLE);
+                    TextView tv = (TextView) findViewById(R.id.result_textView);
+                    tv.setText("Dealer BUSTS, You Win");
+                    tv.setVisibility(View.VISIBLE);
+                    int winnings = playGame.getBetAmount() * 2;
+                    playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
+                    break;
                 }
 
                 if(playGame.getPlayerScore() > playGame.getDealerScore() && playGame.getPlayerScore() <= 21 && playGame.getDealerScore() <= 21){
@@ -306,6 +318,8 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     TextView tv = (TextView) findViewById(R.id.result_textView);
                     tv.setText("YOU WIN");
                     tv.setVisibility(View.VISIBLE);
+                    int winnings = playGame.getBetAmount() * 2;
+                    playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
                     break;
                 }
 
@@ -320,7 +334,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     tv.setText("DEALER WINS");
                     tv.setVisibility(View.VISIBLE);
                     break;
-            }
+                }
 
                 if(playGame.getPlayerScore() == playGame.getDealerScore() && playGame.getPlayerScore() <= 21 && playGame.getDealerScore() <= 21){
                     b = (Button) findViewById(R.id.hit_button);
@@ -332,8 +346,16 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     TextView tv = (TextView) findViewById(R.id.result_textView);
                     tv.setText("PUSH");
                     tv.setVisibility(View.VISIBLE);
+                    int winnings = playGame.getBetAmount();
+                    playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
                     break;
                 }
+
+                case R.id.next_button:
+                    Intent iActivity_Bet = new Intent(getApplicationContext(), activity_bet.class);
+                    iActivity_Bet.putExtra(PLAYER_CASH_KEY, (playGame.getPlayerCash()));
+                    startActivity(iActivity_Bet);
+                    break;
 
         }
     }

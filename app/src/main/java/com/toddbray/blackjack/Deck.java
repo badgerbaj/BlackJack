@@ -133,7 +133,7 @@ public class Deck extends MainActivity {
 
         if (value == 1) {
             // Ace
-            return 1;
+            return 11;
         }
         else if (value > 9) {
             // Face Card

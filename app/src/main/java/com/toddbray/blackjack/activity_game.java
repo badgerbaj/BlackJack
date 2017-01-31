@@ -25,6 +25,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
     private TextView tv_PlayerScore;
     private TextView tv_DealerScore;
     private TextView tv_Cash;
+    private int downcard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,84 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         }
 
         playDeck.shuffle(1);
+
+        int i = 0;
+        // FIRST PLAYER CARD
+        // Draw the next card in the shuffled deck
+        ImageView iv = (ImageView) findViewById(playerCards.get(i));
+        iv.setImageResource(playDeck.getDeck().get(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]));
+
+        // Add drawn card to hand
+        playGame.setPlayerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+
+        // Calculate Score
+        int tally = playGame.getPlayerScore();
+        tally += playDeck.getCardValue(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+        playGame.setPlayerScore(tally);
+
+        // Display New Score
+        tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
+
+        // Move to the next card in the shuffled deck
+        playDeck.incrementDeckPosition();
+
+        // FIRST DEALER CARD
+        // Draw the next card in the shuffled deck
+        iv = (ImageView) findViewById(dealerCards.get(i));
+        iv.setImageResource(playDeck.getDeck().get(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]));
+
+        // Add drawn card to hand
+        playGame.setDealerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+
+        // Calculate Score
+        int dealer_tally = playGame.getDealerScore();
+        dealer_tally += playDeck.getCardValue(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+        playGame.setDealerScore(dealer_tally);
+
+        // Display New Score
+        tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
+
+        // Move to the next card in the shuffled deck
+        playDeck.incrementDeckPosition();
+
+        i++;
+
+        // SECOND PLAYER CARD
+        // Draw the next card in the shuffled deck
+        iv = (ImageView) findViewById(playerCards.get(i));
+        iv.setImageResource(playDeck.getDeck().get(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]));
+
+        // Add drawn card to hand
+        playGame.setPlayerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+
+        // Calculate Score
+        tally = playGame.getPlayerScore();
+        tally += playDeck.getCardValue(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+        playGame.setPlayerScore(tally);
+
+        // Display New Score
+        tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
+
+        // Move to the next card in the shuffled deck
+        playDeck.incrementDeckPosition();
+
+        // SECOND DEALER CARD
+        // Draw the next card in the shuffled deck
+        iv = (ImageView) findViewById(dealerCards.get(i));
+        iv.setImageResource(R.drawable.card_back);
+        downcard = playDeck.getDeck().get(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+
+        // Add drawn card to hand
+        playGame.setDealerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+
+        // Calculate Score
+        dealer_tally = playGame.getDealerScore();
+        dealer_tally += playDeck.getCardValue(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+        playGame.setDealerScore(dealer_tally);
+
+        // Move to the next card in the shuffled deck
+        playDeck.incrementDeckPosition();
+
     }
 
     @Override
@@ -110,22 +189,28 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                 break;
             case R.id.stand_button:
 
+                ImageView iv = (ImageView) findViewById(dealerCards.get(1));
+                iv.setImageResource(downcard);
+
+                // Display New Score
+                tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
+
                 while(playGame.getDealerScore() < 17) {
 
                     for(int i = 0; i < MAX_HAND; i++) {
                         if(playGame.getDealerHand()[i] == 0) {
 
                             // Draw the next card in the shuffled deck
-                            ImageView iv = (ImageView) findViewById(dealerCards.get(i));
+                            iv = (ImageView) findViewById(dealerCards.get(i));
                             iv.setImageResource(playDeck.getDeck().get(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]));
 
                             // Add drawn card to hand
                             playGame.setDealerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
 
                             // Calculate Score
-                            int tally = playGame.getDealerScore();
-                            tally += playDeck.getCardValue(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
-                            playGame.setDealerScore(tally);
+                            int dealer_tally = playGame.getDealerScore();
+                            dealer_tally += playDeck.getCardValue(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+                            playGame.setDealerScore(dealer_tally);
 
                             // Display New Score
                             tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -73,6 +74,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
 
         // For Testing
         playDeck.shuffle(1);
+        invokeXML.saveToXML(playGame, playDeck, (new File(this.getFilesDir(), FILE_NAME)));
 
         int i = 0;
         // FIRST PLAYER CARD

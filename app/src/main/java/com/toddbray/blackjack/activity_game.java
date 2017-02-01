@@ -227,16 +227,39 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                         tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
 
                         if(playGame.getPlayerScore() > 21) {
-                            Button b = (Button) findViewById(R.id.hit_button);
-                            b.setVisibility(View.INVISIBLE);
-                            b = (Button) findViewById(R.id.stand_button);
-                            b.setVisibility(View.INVISIBLE);
-                            b = (Button) findViewById(R.id.next_button);
-                            b.setVisibility(View.VISIBLE);
-                            TextView tv = (TextView) findViewById(R.id.result_textView);
-                            tv.setText("You BUSTED");
-                            tv.setVisibility(View.VISIBLE);
-                            break;
+
+
+                            for(int ii = 0; ii < MAX_HAND; ii++) {
+                                //Toast.makeText(this, "Player Hand: " + ii + " " + playGame.getPlayerHand()[ii], Toast.LENGTH_LONG).show();
+                                if (playDeck.getCardValue(playGame.getPlayerHand()[ii]) == 11) {
+                                    Toast.makeText(this, "Player Cash: " + playGame.getPlayerCash(), Toast.LENGTH_LONG).show();
+
+                                    // Calculate Score
+                                    tally = playGame.getPlayerScore();
+                                    tally -= 10;
+                                    playGame.setPlayerScore(tally);
+
+                                    // Display New Score
+                                    tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
+
+                                    ii = MAX_HAND;
+                                }
+
+                            }
+                            if (playGame.getPlayerScore() > 21) {
+                                Button b = (Button) findViewById(R.id.hit_button);
+                                b.setVisibility(View.INVISIBLE);
+                                b = (Button) findViewById(R.id.stand_button);
+                                b.setVisibility(View.INVISIBLE);
+                                b = (Button) findViewById(R.id.next_button);
+                                b.setVisibility(View.VISIBLE);
+                                TextView tv = (TextView) findViewById(R.id.result_textView);
+                                tv.setText("You BUSTED");
+                                tv.setVisibility(View.VISIBLE);
+                                break;
+                            }
+
+
                         }
 
                         // Move to the next card in the shuffled deck

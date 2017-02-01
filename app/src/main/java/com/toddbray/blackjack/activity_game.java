@@ -229,6 +229,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
 
                         if(playGame.getPlayerScore() > 21) {
 
+                            // Find out how many times 10 can be subtracted on bust
                             int ace = 0;
                             for(int ii = 0; ii < MAX_HAND; ii++) {
                                 //Toast.makeText(this, "Player Hand: " + ii + " " + playGame.getPlayerHand()[ii], Toast.LENGTH_LONG).show();
@@ -238,7 +239,9 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                                 }
                             }
 
+                            // Recount hand score
                             tally = playDeck.getHandScore(playGame.getPlayerHand());
+                            // Remove 10 if over 21 per ace available
                             for(int ii = 0; ii < ace; ii++) {
                                 if( tally > 21 ) { tally -= 10; }
                             }

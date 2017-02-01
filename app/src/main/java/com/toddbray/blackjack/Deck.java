@@ -162,4 +162,14 @@ public class Deck extends MainActivity {
         }
         return value;
     }
+
+    public int getHandScore(int[] hand) {
+        int value = 0;
+
+        for ( int num : hand) {
+            if (num > 0) value += getCardValue(num);
+        }
+
+        return value;
+    }
 }

@@ -120,7 +120,7 @@ public class Deck extends MainActivity {
 
         for(int i = 0; i < (CARD_COUNT*deckCount); i++){
             newNum = rn.nextInt(CARD_COUNT) + 1;
-            while (usageLimit[(newNum-1)] > deckCount) {
+            while (usageLimit[(newNum-1)] >= deckCount) {
                 newNum = rn.nextInt(CARD_COUNT) + 1;
             }
             usageLimit[(newNum-1)]++;
@@ -160,6 +160,16 @@ public class Deck extends MainActivity {
                 }
             }
         }
+        return value;
+    }
+
+    public int getHandScore(int[] hand) {
+        int value = 0;
+
+        for ( int num : hand) {
+            if (num > 0) value += getCardValue(num);
+        }
+
         return value;
     }
 }

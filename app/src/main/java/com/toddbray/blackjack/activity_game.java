@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -71,7 +72,9 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             b.setOnClickListener(this);
         }
 
+        // For Testing
         playDeck.shuffle(1);
+        invokeXML.saveToXML(playGame, playDeck, (new File(this.getFilesDir(), FILE_NAME)));
 
         int i = 0;
         // FIRST PLAYER CARD
@@ -228,24 +231,29 @@ public class activity_game extends MainActivity implements View.OnClickListener 
 
                         if(playGame.getPlayerScore() > 21) {
 
-
+                            // Find out how many times 10 can be subtracted on bust
+                            int ace = 0;
                             for(int ii = 0; ii < MAX_HAND; ii++) {
                                 //Toast.makeText(this, "Player Hand: " + ii + " " + playGame.getPlayerHand()[ii], Toast.LENGTH_LONG).show();
                                 if (playDeck.getCardValue(playGame.getPlayerHand()[ii]) == 11) {
-                                    Toast.makeText(this, "Player Cash: " + playGame.getPlayerCash(), Toast.LENGTH_LONG).show();
-
-                                    // Calculate Score
-                                    tally = playGame.getPlayerScore();
-                                    tally -= 10;
-                                    playGame.setPlayerScore(tally);
-
-                                    // Display New Score
-                                    tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
-
-                                    ii = MAX_HAND;
+                                    //Toast.makeText(this, "Player Cash: " + playGame.getPlayerCash(), Toast.LENGTH_LONG).show();
+                                    ace++;
                                 }
-
                             }
+
+                            // Recount hand score
+                            tally = playDeck.getHandScore(playGame.getPlayerHand());
+                            // Remove 10 if over 21 per ace available
+                            for(int ii = 0; ii < ace; ii++) {
+                                if( tally > 21 ) { tally -= 10; }
+                            }
+
+                            // Set Score
+                            playGame.setPlayerScore(tally);
+
+                            // Display New Score
+                            tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
+
                             if (playGame.getPlayerScore() > 21) {
                                 Button b = (Button) findViewById(R.id.hit_button);
                                 b.setVisibility(View.INVISIBLE);

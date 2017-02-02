@@ -29,9 +29,9 @@ public class InvokeXML extends MainActivity {
 
     private static final String XML_ROOT = "blackjack";
     private static final String XML_GAMEPLAY = "gameplay";
-    private static final String FILE_NAME = "play_data.xml";
 
-    public boolean readXML() {
+
+    public boolean readXML(File file) {
 
         Document dom;
         // Make an  instance of the DocumentBuilderFactory
@@ -41,7 +41,7 @@ public class InvokeXML extends MainActivity {
             DocumentBuilder db = dbf.newDocumentBuilder();
             // parse using the builder to get the DOM mapping of the
             // XML file
-            if(fileExistance())
+            if(fileExistance(file))
                 //new File(this.getFilesDir(), FILE_NAME);
                 dom = db.parse(new File(this.getFilesDir(), FILE_NAME));
             else return false;
@@ -105,10 +105,11 @@ public class InvokeXML extends MainActivity {
         return false;
     }
 
-    public void saveToXML() {
+    public void saveToXML(GameState game, Deck deck, File file) {
         Document dom;
         Element newDeck;
         Element e;
+        Element c;
 
         // instance of a DocumentBuilderFactory
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -125,35 +126,40 @@ public class InvokeXML extends MainActivity {
             newDeck = dom.createElement(XML_GAMEPLAY);
 
             e = dom.createElement(DECK_COUNT_KEY);
-            e.appendChild(dom.createTextNode("" + playDeck.getDeckPosition()));
+            e.appendChild(dom.createTextNode("" + deck.getDeckPosition()));
             newDeck.appendChild(e);
 
             e = dom.createElement(PLAYER_CASH_KEY);
-            e.appendChild(dom.createTextNode("" + playGame.getPlayerCash()));
+            e.appendChild(dom.createTextNode("" + game.getPlayerCash()));
             newDeck.appendChild(e);
 
             e = dom.createElement(PLAYER_SCORE_KEY);
-            e.appendChild(dom.createTextNode("" + playGame.getPlayerScore()));
+            e.appendChild(dom.createTextNode("" + game.getPlayerScore()));
             newDeck.appendChild(e);
 
             e = dom.createElement(DEALER_SCORE_KEY);
-            e.appendChild(dom.createTextNode("" + playGame.getDealerScore()));
+            e.appendChild(dom.createTextNode("" + game.getDealerScore()));
             newDeck.appendChild(e);
 
             e = dom.createElement(BET_AMOUNT_KEY);
-            e.appendChild(dom.createTextNode("" + playGame.getBetAmount()));
+            e.appendChild(dom.createTextNode("" + game.getBetAmount()));
             newDeck.appendChild(e);
 
-            // TODO: Build DECK_POSITION_KEY under a SHUFFLE_KEY element
-            // TODO: Add NUMBER_KEY elements per shuffled deck entry
             e = dom.createElement(SHUFFLE_KEY);
-            //e.appendChild(dom.createTextNode(playDeck.getShuffleOrder()));
-            newDeck.appendChild(e);
 
-            e = dom.createElement(DECK_POSITION_KEY);
-            e.appendChild(dom.createTextNode("" + playDeck.getDeckPosition()));
-            newDeck.appendChild(e);
+            //  Build DECK_POSITION_KEY under a SHUFFLE_KEY element
+            c = dom.createElement(DECK_POSITION_KEY);
+            c.appendChild(dom.createTextNode("" + deck.getDeckPosition()));
+            e.appendChild(c);
 
+            //  Add NUMBER_KEY elements per shuffled deck entry
+            for(int num : deck.getShuffleOrder()) {
+                c = dom.createElement(NUMBER_KEY);
+                c.appendChild(dom.createTextNode("" + num));
+                e.appendChild(c);
+            }
+
+            newDeck.appendChild(e);
 
             rootEle.appendChild(newDeck);
 
@@ -168,7 +174,7 @@ public class InvokeXML extends MainActivity {
                 tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
                 // send DOM to file
-                tr.transform(new DOMSource(dom), new StreamResult(new FileOutputStream(new File(this.getFilesDir(), FILE_NAME))));
+                tr.transform(new DOMSource(dom), new StreamResult(new FileOutputStream(file)));
 
             } catch (TransformerException te) {
                 System.out.println(te.getMessage());
@@ -180,8 +186,8 @@ public class InvokeXML extends MainActivity {
         }
     }
 
-    public boolean fileExistance(){
-        File file = new File(this.getFilesDir(), FILE_NAME);
+    public boolean fileExistance(File file){
+        //File file = new File(this.getFilesDir(), FILE_NAME);
         return file.exists();
     }
 }

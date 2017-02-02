@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String DEALER_SCORE_KEY = "dealerscore";
     public static final String BET_AMOUNT_KEY = "betamount";
     public static final String NUMBER_KEY = "number";
+    public static final String FILE_NAME = "play_data.xml";
 
     public static final int CARD_COUNT = 52;
     public static final int BET_AMOUNT_ONE = 1;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public Deck playDeck;
     public GameState playGame;
+    public InvokeXML invokeXML;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         playDeck = new Deck();
         playGame = new GameState();
+        invokeXML = new InvokeXML();
     }
 
     @Override

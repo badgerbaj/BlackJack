@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static final String SHUFFLE_KEY = "shuffle";
@@ -14,7 +16,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String DECK_COUNT_KEY = "deckcount";
     public static final String PLAYER_CASH_KEY = "playercash";
     public static final String PLAYER_SCORE_KEY = "playerscore";
+    public static final String PLAYER_HAND_KEY = "playerhand";
     public static final String DEALER_SCORE_KEY = "dealerscore";
+    public static final String DEALER_HAND_KEY = "dealerhand";
     public static final String BET_AMOUNT_KEY = "betamount";
     public static final String NUMBER_KEY = "number";
     public static final String FILE_NAME = "play_data.xml";
@@ -42,9 +46,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             b.setOnClickListener(this);
         }
 
-        playDeck = new Deck();
-        playGame = new GameState();
+        File file = new File(this.getFilesDir(), FILE_NAME);
         invokeXML = new InvokeXML();
+
+        playDeck = new Deck();
+        playDeck = invokeXML.readDeckXML(file);
+
+        playGame = new GameState();
+        playGame = invokeXML.readGameXML(file);
     }
 
     @Override

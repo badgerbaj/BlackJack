@@ -1,5 +1,7 @@
 package com.toddbray.blackjack;
 
+import android.widget.Toast;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -31,7 +33,7 @@ public class InvokeXML extends MainActivity {
     private static final String XML_GAMEPLAY = "gameplay";
 
 
-    public boolean readXML(File file) {
+    public GameState readGameXML(File file) {
 
         Document dom;
         // Make an  instance of the DocumentBuilderFactory
@@ -41,10 +43,92 @@ public class InvokeXML extends MainActivity {
             DocumentBuilder db = dbf.newDocumentBuilder();
             // parse using the builder to get the DOM mapping of the
             // XML file
-            if(fileExistance(file))
+            playGame = new GameState();
+            if(fileExistence(file))
                 //new File(this.getFilesDir(), FILE_NAME);
-                dom = db.parse(new File(this.getFilesDir(), FILE_NAME));
-            else return false;
+                dom = db.parse(file);
+            else return playGame;
+
+            Element doc = dom.getDocumentElement();
+
+            NodeList nl;
+            nl = doc.getElementsByTagName(XML_GAMEPLAY);
+
+            for(int i = 0; i < nl.getLength(); i++)
+            {
+                for(int ii = 0; ii < nl.item(i).getChildNodes().getLength(); ii++)
+                {
+                    switch (nl.item(i).getChildNodes().item(ii).getNodeName()) {
+                        case PLAYER_CASH_KEY:
+                            playGame.setPlayerCash(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            break;
+                        case PLAYER_SCORE_KEY:
+                            playGame.setPlayerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            break;
+                        case DEALER_SCORE_KEY:
+                            playGame.setDealerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            break;
+                        case BET_AMOUNT_KEY:
+                            playGame.setDealerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            break;
+                        case PLAYER_HAND_KEY:
+                            int count =0;
+                            for(
+                                    int iii = 0;
+                                    iii < nl.item(i).getChildNodes().item(ii).getChildNodes().getLength();
+                                    iii++) {
+                                    if(NUMBER_KEY.equals(nl.item(i).getChildNodes().item(ii).getChildNodes().item(iii).getNodeName())) {
+                                        playGame.setPlayerHandPos(count, Integer.parseInt(nl.item(i).getChildNodes()
+                                                .item(ii).getChildNodes().item(iii).getTextContent()));
+                                        count++;
+                                    }
+                            }
+                            break;
+                        case DEALER_HAND_KEY:
+                            count =0;
+                            for(
+                                    int iii = 0;
+                                    iii < nl.item(i).getChildNodes().item(ii).getChildNodes().getLength();
+                                    iii++) {
+                                    if(NUMBER_KEY.equals(nl.item(i).getChildNodes().item(ii).getChildNodes().item(iii).getNodeName())) {
+                                        playGame.setDealerHandPos(count, Integer.parseInt(nl.item(i).getChildNodes()
+                                                .item(ii).getChildNodes().item(iii).getTextContent()));
+                                        count++;
+                                    }
+                            }
+                            break;
+                    }
+                }
+            }
+
+            return playGame;
+
+        } catch (ParserConfigurationException pce) {
+            System.out.println(pce.getMessage());
+        } catch (SAXException se) {
+            System.out.println(se.getMessage());
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }
+
+        return playGame;
+    }
+
+    public Deck readDeckXML(File file) {
+
+        Document dom;
+        // Make an  instance of the DocumentBuilderFactory
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            // use the factory to take an instance of the document builder
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            // parse using the builder to get the DOM mapping of the
+            // XML file
+            playDeck = new Deck();
+            if(fileExistence(file))
+                //new File(this.getFilesDir(), FILE_NAME);
+                dom = db.parse(file);
+            else return playDeck;
 
             Element doc = dom.getDocumentElement();
 
@@ -58,33 +142,27 @@ public class InvokeXML extends MainActivity {
             {
                 for(int ii = 0; ii < nl.item(i).getChildNodes().getLength(); ii++)
                 {
+                    //String val = nl.item(0).getChildNodes().item(1).getTextContent();
                     switch (nl.item(i).getChildNodes().item(ii).getNodeName()) {
+                        case DECK_COUNT_KEY:
+                            playDeck.setDeckCount(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            shuffle = new int[(CARD_COUNT * (playDeck.getDeckCount()))];
+                            break;
                         case DECK_POSITION_KEY:
                             playDeck.setDeckPosition(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
                             break;
-                        case PLAYER_CASH_KEY:
-                            playGame.setPlayerCash(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
-                            break;
-                        case PLAYER_SCORE_KEY:
-                            playGame.setPlayerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
-                            break;
-                        case DEALER_SCORE_KEY:
-                            playGame.setDealerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
-                            break;
-                        case BET_AMOUNT_KEY:
-                            playGame.setDealerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
-                            break;
                         case SHUFFLE_KEY:
+                            int count =0;
                             for(
                                     int iii = 0;
                                     iii < nl.item(i).getChildNodes().item(ii).getChildNodes().getLength();
                                     iii++) {
-                                if((nl.item(i).getChildNodes().item(ii).getChildNodes().item(iii).getNodeName()) == DECK_COUNT_KEY) {
-                                    playDeck.setDeckCount(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
-                                    shuffle = new int[(CARD_COUNT * (playDeck.getDeckCount()))];
+                                if(NUMBER_KEY.equals(nl.item(i).getChildNodes().item(ii).getChildNodes().item(iii).getNodeName()))
+                                {
+                                    shuffle[count] = Integer.parseInt(nl.item(i).getChildNodes()
+                                            .item(ii).getChildNodes().item(iii).getTextContent());
+                                    count++;
                                 }
-                                else shuffle[iii] = Integer.parseInt(nl.item(i).getChildNodes()
-                                        .item(ii).getChildNodes().item(iii).getTextContent());
                             }
                             playDeck.setShuffleOrder(shuffle);
                             break;
@@ -92,7 +170,7 @@ public class InvokeXML extends MainActivity {
                 }
             }
 
-            return true;
+            return playDeck;
 
         } catch (ParserConfigurationException pce) {
             System.out.println(pce.getMessage());
@@ -102,7 +180,7 @@ public class InvokeXML extends MainActivity {
             System.err.println(ioe.getMessage());
         }
 
-        return false;
+        return playDeck;
     }
 
     public void saveToXML(GameState game, Deck deck, File file) {
@@ -126,6 +204,10 @@ public class InvokeXML extends MainActivity {
             newDeck = dom.createElement(XML_GAMEPLAY);
 
             e = dom.createElement(DECK_COUNT_KEY);
+            e.appendChild(dom.createTextNode("" + deck.getDeckCount()));
+            newDeck.appendChild(e);
+
+            e = dom.createElement(DECK_POSITION_KEY);
             e.appendChild(dom.createTextNode("" + deck.getDeckPosition()));
             newDeck.appendChild(e);
 
@@ -145,20 +227,31 @@ public class InvokeXML extends MainActivity {
             e.appendChild(dom.createTextNode("" + game.getBetAmount()));
             newDeck.appendChild(e);
 
+            e = dom.createElement(PLAYER_HAND_KEY);
+            //  Add NUMBER_KEY elements per player hand entry
+            for(int num : game.getPlayerHand()) {
+                c = dom.createElement(NUMBER_KEY);
+                c.appendChild(dom.createTextNode("" + num));
+                e.appendChild(c);
+            }
+            newDeck.appendChild(e);
+
+            e = dom.createElement(DEALER_HAND_KEY);
+            //  Add NUMBER_KEY elements per dealer hand entry
+            for(int num : game.getPlayerHand()) {
+                c = dom.createElement(NUMBER_KEY);
+                c.appendChild(dom.createTextNode("" + num));
+                e.appendChild(c);
+            }
+            newDeck.appendChild(e);
+
             e = dom.createElement(SHUFFLE_KEY);
-
-            //  Build DECK_POSITION_KEY under a SHUFFLE_KEY element
-            c = dom.createElement(DECK_POSITION_KEY);
-            c.appendChild(dom.createTextNode("" + deck.getDeckPosition()));
-            e.appendChild(c);
-
             //  Add NUMBER_KEY elements per shuffled deck entry
             for(int num : deck.getShuffleOrder()) {
                 c = dom.createElement(NUMBER_KEY);
                 c.appendChild(dom.createTextNode("" + num));
                 e.appendChild(c);
             }
-
             newDeck.appendChild(e);
 
             rootEle.appendChild(newDeck);
@@ -186,7 +279,7 @@ public class InvokeXML extends MainActivity {
         }
     }
 
-    public boolean fileExistance(File file){
+    public boolean fileExistence(File file){
         //File file = new File(this.getFilesDir(), FILE_NAME);
         return file.exists();
     }

@@ -46,14 +46,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             b.setOnClickListener(this);
         }
 
-        File file = new File(this.getFilesDir(), FILE_NAME);
+
         invokeXML = new InvokeXML();
 
         playDeck = new Deck();
-        playDeck = invokeXML.readDeckXML(file);
-
         playGame = new GameState();
-        playGame = invokeXML.readGameXML(file);
     }
 
     @Override
@@ -66,10 +63,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(iActivity_Bet);
                 break;
             case R.id.continue_button:
-
-                if(playGame.getPlayerScore() > 0 && playGame.getPlayerCash() > 0) {
+                //File file = new File(this.getFilesDir(), FILE_NAME);
+                playGame = invokeXML.readGameXML(new File(this.getFilesDir(), FILE_NAME));
+                if(playGame.getPlayerCash() > 0) {
                     Intent iActivity_Game = new Intent(getApplicationContext(), activity_game.class);
-
+                    iActivity_Game.putExtra(PLAYER_CASH_KEY, playGame.getPlayerCash());
+                    iActivity_Game.putExtra(BET_AMOUNT_KEY, playGame.getBetAmount());
                     startActivity(iActivity_Game);
                 }
                 else {

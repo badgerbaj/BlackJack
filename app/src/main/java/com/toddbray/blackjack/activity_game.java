@@ -41,8 +41,8 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         }
 
         int[] imageViewDealerIds = {R.id.dealer_1_imageView, R.id.dealer_2_imageView, R.id.dealer_3_imageView,
-            R.id.dealer_4_imageView, R.id.dealer_5_imageView, R.id.dealer_6_imageView, R.id.dealer_7_imageView,
-            R.id.dealer_8_imageView};
+                R.id.dealer_4_imageView, R.id.dealer_5_imageView, R.id.dealer_6_imageView, R.id.dealer_7_imageView,
+                R.id.dealer_8_imageView};
         dealerCards = new HashMap<Integer, Integer>();
         for(int i=0; i < MAX_HAND; i++) {
             dealerCards.put(i, imageViewDealerIds[i]);
@@ -245,14 +245,15 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     break;
                 }
 
-                case R.id.next_button:
-                    Intent iActivity_Bet = new Intent(getApplicationContext(), activity_bet.class);
-                    iActivity_Bet.putExtra(PLAYER_CASH_KEY, (playGame.getPlayerCash()));
-                    startActivity(iActivity_Bet);
-                    break;
+            case R.id.next_button:
+                Intent iActivity_Bet = new Intent(getApplicationContext(), activity_bet.class);
+                iActivity_Bet.putExtra(PLAYER_CASH_KEY, (playGame.getPlayerCash()));
+                startActivity(iActivity_Bet);
+                break;
 
         }
     }
+
     public void DealCard(String target, boolean isHidden) {
         for(int i = 0; i < MAX_HAND; i++) {
             switch (target) {

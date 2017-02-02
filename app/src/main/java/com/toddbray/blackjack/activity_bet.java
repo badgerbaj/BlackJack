@@ -38,7 +38,32 @@ public class activity_bet extends MainActivity implements View.OnClickListener {
 
         TextView tv_Money = (TextView) findViewById(R.id.money_textView);
         tv_Money.setText(String.valueOf(playGame.getPlayerCash()));
+
+        if (playGame.getPlayerCash() < 20) {
+            ImageButton b = (ImageButton) findViewById(R.id.twenty_dollar_imageButton);
+            b.setVisibility(View.INVISIBLE);
+        }
+
+        if (playGame.getPlayerCash() < 10) {
+            ImageButton b = (ImageButton) findViewById(R.id.ten_dollar_imageButton);
+            b.setVisibility(View.INVISIBLE);
+        }
+
+        if (playGame.getPlayerCash() < 5) {
+            ImageButton b = (ImageButton) findViewById(R.id.five_dollar_imageButton);
+            b.setVisibility(View.INVISIBLE);
+        }
+
+        if (playGame.getPlayerCash() < 1) {
+            ImageButton b = (ImageButton) findViewById(R.id.one_dollar_imageButton);
+            b.setVisibility(View.INVISIBLE);
+            TextView tv = (TextView) findViewById(R.id.bet_textView);
+            tv.setText("GAME OVER");
+        }
+
     }
+
+
 
     @Override
     public void onClick(View v) {

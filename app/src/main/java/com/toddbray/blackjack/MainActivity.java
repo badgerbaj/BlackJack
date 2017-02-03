@@ -45,19 +45,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Button b = (Button) findViewById(id);
             b.setOnClickListener(this);
         }
-
-
         invokeXML = new InvokeXML();
-
         playDeck = new Deck();
         playGame = new GameState();
+
+        // Needed until saveToXml is broken in to separate deck and game files
+        playDeck.shuffle(1);
     }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.play_button:
-                // Call About_App
+                // Call Bidding Activity
+
+                invokeXML.saveToXML(playGame, playDeck,  new File(this.getFilesDir(), FILE_NAME));
+
                 Intent iActivity_Bet = new Intent(getApplicationContext(), activity_bet.class);
                 iActivity_Bet.putExtra(PLAYER_CASH_KEY, playGame.getPlayerCash());
                 startActivity(iActivity_Bet);
@@ -67,8 +70,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 playGame = invokeXML.readGameXML(new File(this.getFilesDir(), FILE_NAME));
                 if(playGame.getPlayerCash() > 0) {
                     Intent iActivity_Game = new Intent(getApplicationContext(), activity_game.class);
-                    iActivity_Game.putExtra(PLAYER_CASH_KEY, playGame.getPlayerCash());
-                    iActivity_Game.putExtra(BET_AMOUNT_KEY, playGame.getBetAmount());
                     startActivity(iActivity_Game);
                 }
                 else {

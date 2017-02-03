@@ -185,6 +185,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                         DealCard(DEALER_HAND_KEY, false);
                         if (playGame.getDealerScore() > 21) TestSoftHand(DEALER_HAND_KEY);
                     }
+                    if(playGame.getDealerScore() >= 17) break;
                 }
 
                 if(playGame.getDealerScore() > 21) {

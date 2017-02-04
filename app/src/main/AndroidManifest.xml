@@ -3,20 +3,22 @@
     package="com.toddbray.blackjack">
 
     <application
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="B &amp; T CASINO: BLACKJACK"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity_bet" />
-        <activity android:name=".activity_game" />
+        <activity android:name=".activity_bet" android:screenOrientation="portrait" />
+        <activity android:name=".activity_game" android:screenOrientation="portrait" />
     </application>
 
 </manifest>

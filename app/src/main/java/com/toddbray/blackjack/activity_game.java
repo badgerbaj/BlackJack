@@ -2,13 +2,10 @@ package com.toddbray.blackjack;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.HashMap;
@@ -38,7 +35,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         if(extras != null) {
             playGame.setPlayerCash(extras.getInt(PLAYER_CASH_KEY));
             playGame.setBetAmount(extras.getInt(BET_AMOUNT_KEY));
-            invokeXML.saveToXML(playGame, playDeck, (new File(this.getFilesDir(), FILE_NAME)));
+            invokeXML.writeGameXML(playGame, (new File(this.getFilesDir(), FILE_NAME_GAME)));
         }
 
         int[] imageViewDealerIds = {R.id.dealer_1_imageView, R.id.dealer_2_imageView, R.id.dealer_3_imageView,
@@ -73,16 +70,15 @@ public class activity_game extends MainActivity implements View.OnClickListener 
     @Override
     protected void onPause(){
         super.onPause();
-        invokeXML.saveToXML(playGame, playDeck, (new File(this.getFilesDir(), FILE_NAME)));
+        invokeXML.writeGameXML(playGame, (new File(this.getFilesDir(), FILE_NAME_GAME)));
+        invokeXML.writeDeckXML(playDeck, (new File(this.getFilesDir(), FILE_NAME_DECK)));
     }
     @Override
     protected void onResume(){
         super.onResume();
 
-        File file = new File(this.getFilesDir(), FILE_NAME);
-
-        playGame = invokeXML.readGameXML(file);
-        playDeck = invokeXML.readDeckXML(file);
+        playGame = invokeXML.readGameXML(new File(this.getFilesDir(), FILE_NAME_GAME));
+        playDeck = invokeXML.readDeckXML(new File(this.getFilesDir(), FILE_NAME_DECK));
 
         if(playGame.getPlayerHand()[0] == 0) {
 
@@ -104,7 +100,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             TestSoftHand(PLAYER_HAND_KEY);
         }
         else DealHand();
-        // invokeXML.saveToXML(playGame, playDeck, (new File(this.getFilesDir(), FILE_NAME)));
+        // invokeXML.writeGameXML(playGame, playDeck, (new File(this.getFilesDir(), FILE_NAME)));
 
         int tally = playGame.getPlayerScore();
         int dealer_tally = playGame.getDealerScore();

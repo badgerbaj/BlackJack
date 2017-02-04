@@ -2,6 +2,7 @@ package com.toddbray.blackjack;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -90,17 +91,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             // For Testing
             playDeck.shuffle(1);
 
-            // First Player Card
-            DealCard(PLAYER_HAND_KEY, false);
-
-            // First Dealer Card
-            DealCard(DEALER_HAND_KEY, false);
-
-            // Second Player Card
-            DealCard(PLAYER_HAND_KEY, false);
-
-            // Second Dealer Card
-            DealCard(DEALER_HAND_KEY, true);
+            spinSelected();
 
         }
         else {
@@ -454,5 +445,40 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             return false;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void spinSelected()
+    {
+        new CountDownTimer(3200, 400) {
+            int i = 0;
+            public void onTick(long millisUntilFinished) {
+
+                    switch (i) {
+                        case 0:
+                            // First Player Card
+                            DealCard(PLAYER_HAND_KEY, false);
+
+                            break;
+                        case 1:
+                            // First Dealer Card
+                            DealCard(DEALER_HAND_KEY, false);
+                            break;
+                        case 2:
+                            // Second Player Card
+                            DealCard(PLAYER_HAND_KEY, false);
+                            break;
+
+                        case 3:
+                            // Second Dealer Card
+                            DealCard(DEALER_HAND_KEY, true);
+                            break;
+                    }
+                    i++;
+                }
+
+            public void onFinish() {
+
+            }
+        }.start();
     }
 }

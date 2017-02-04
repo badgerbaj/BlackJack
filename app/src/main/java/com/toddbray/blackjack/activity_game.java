@@ -2,13 +2,13 @@ package com.toddbray.blackjack;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import junit.framework.Test;
 
 import java.io.File;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         if(extras != null) {
             playGame.setPlayerCash(extras.getInt(PLAYER_CASH_KEY));
             playGame.setBetAmount(extras.getInt(BET_AMOUNT_KEY));
-            invokeXML.saveToXML(playGame, playDeck, (new File(this.getFilesDir(), FILE_NAME)));
+            invokeXML.writeGameXML(playGame, (new File(this.getFilesDir(), FILE_NAME_GAME)));
         }
 
         int[] imageViewDealerIds = {R.id.dealer_1_imageView, R.id.dealer_2_imageView, R.id.dealer_3_imageView,
@@ -69,20 +69,18 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         }
     }
 
-
     @Override
     protected void onPause(){
         super.onPause();
-        invokeXML.saveToXML(playGame, playDeck, (new File(this.getFilesDir(), FILE_NAME)));
+        invokeXML.writeGameXML(playGame, (new File(this.getFilesDir(), FILE_NAME_GAME)));
+        invokeXML.writeDeckXML(playDeck, (new File(this.getFilesDir(), FILE_NAME_DECK)));
     }
     @Override
     protected void onResume(){
         super.onResume();
 
-        File file = new File(this.getFilesDir(), FILE_NAME);
-
-        playGame = invokeXML.readGameXML(file);
-        playDeck = invokeXML.readDeckXML(file);
+        playGame = invokeXML.readGameXML(new File(this.getFilesDir(), FILE_NAME_GAME));
+        playDeck = invokeXML.readDeckXML(new File(this.getFilesDir(), FILE_NAME_DECK));
 
         if(playGame.getPlayerHand()[0] == 0) {
 
@@ -101,10 +99,14 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             // Second Dealer Card
             DealCard(DEALER_HAND_KEY, true);
 
-            TestSoftHand(PLAYER_HAND_KEY);
+
         }
-        else DealHand();
-        // invokeXML.saveToXML(playGame, playDeck, (new File(this.getFilesDir(), FILE_NAME)));
+        else {
+            DealHand();
+        }
+
+        TestSoftHand(PLAYER_HAND_KEY);
+        TestSoftHand(DEALER_HAND_KEY);
 
         int tally = playGame.getPlayerScore();
         int dealer_tally = playGame.getDealerScore();
@@ -151,8 +153,6 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         }
 
         tv_Cash.setText(String.valueOf(playGame.getPlayerCash()));
-        tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
-        tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
     }
 
     @Override
@@ -312,6 +312,8 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                         // Add drawn card to hand
                         playGame.setPlayerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
 
+                        //Toast.makeText(this, "Card " + i + " Drawn: " + playDeck.getShuffleOrder()[playDeck.getDeckPosition()], Toast.LENGTH_LONG).show();
+
                         // Calculate Score
                         int tally = playGame.getPlayerScore();
                         tally += playDeck.getCardValue(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
@@ -340,6 +342,8 @@ public class activity_game extends MainActivity implements View.OnClickListener 
 
                         // Add drawn card to hand
                         playGame.setDealerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+
+                        //Toast.makeText(this, "Card " + i + " Drawn: " + playDeck.getShuffleOrder()[playDeck.getDeckPosition()], Toast.LENGTH_LONG).show();
 
                         // Calculate Score
                         int tally = playGame.getDealerScore();

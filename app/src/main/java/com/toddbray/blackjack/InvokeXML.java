@@ -183,7 +183,7 @@ public class InvokeXML extends MainActivity {
         return playDeck;
     }
 
-    public void saveToXML(GameState game, Deck deck, File file) {
+    public void writeGameXML(GameState game, File file) {
         Document dom;
         Element newDeck;
         Element e;
@@ -203,13 +203,6 @@ public class InvokeXML extends MainActivity {
             // build gameplay element
             newDeck = dom.createElement(XML_GAMEPLAY);
 
-            e = dom.createElement(DECK_COUNT_KEY);
-            e.appendChild(dom.createTextNode("" + deck.getDeckCount()));
-            newDeck.appendChild(e);
-
-            e = dom.createElement(DECK_POSITION_KEY);
-            e.appendChild(dom.createTextNode("" + deck.getDeckPosition()));
-            newDeck.appendChild(e);
 
             e = dom.createElement(PLAYER_CASH_KEY);
             e.appendChild(dom.createTextNode("" + game.getPlayerCash()));
@@ -244,6 +237,60 @@ public class InvokeXML extends MainActivity {
                 e.appendChild(c);
             }
             newDeck.appendChild(e);
+
+            rootEle.appendChild(newDeck);
+
+            dom.appendChild(rootEle);
+
+            try {
+                Transformer tr = TransformerFactory.newInstance().newTransformer();
+                tr.setOutputProperty(OutputKeys.INDENT, "yes");
+                tr.setOutputProperty(OutputKeys.METHOD, "xml");
+                tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "roles.dtd");
+                tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+                // send DOM to file
+                tr.transform(new DOMSource(dom), new StreamResult(new FileOutputStream(file)));
+
+            } catch (TransformerException te) {
+                System.out.println(te.getMessage());
+            } catch (IOException ioe) {
+                System.out.println(ioe.getMessage());
+            }
+        } catch (ParserConfigurationException pce) {
+            System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce);
+        }
+    }
+
+    public void writeDeckXML(Deck deck, File file) {
+        Document dom;
+        Element newDeck;
+        Element e;
+        Element c;
+
+        // instance of a DocumentBuilderFactory
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            // use factory to get an instance of document builder
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            // create instance of DOM
+            dom = db.newDocument();
+
+            // create the root element
+            Element rootEle = dom.createElement(XML_ROOT);
+
+            // build gameplay element
+            newDeck = dom.createElement(XML_GAMEPLAY);
+
+            e = dom.createElement(DECK_COUNT_KEY);
+            e.appendChild(dom.createTextNode("" + deck.getDeckCount()));
+            newDeck.appendChild(e);
+
+            e = dom.createElement(DECK_POSITION_KEY);
+            e.appendChild(dom.createTextNode("" + deck.getDeckPosition()));
+            newDeck.appendChild(e);
+
 
             e = dom.createElement(SHUFFLE_KEY);
             //  Add NUMBER_KEY elements per shuffled deck entry

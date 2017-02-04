@@ -69,7 +69,7 @@ public class InvokeXML extends MainActivity {
                             playGame.setDealerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
                             break;
                         case BET_AMOUNT_KEY:
-                            playGame.setDealerScore(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
+                            playGame.setBetAmount(Integer.parseInt(nl.item(i).getChildNodes().item(ii).getTextContent()));
                             break;
                         case PLAYER_HAND_KEY:
                             int count =0;
@@ -231,7 +231,7 @@ public class InvokeXML extends MainActivity {
 
             e = dom.createElement(DEALER_HAND_KEY);
             //  Add NUMBER_KEY elements per dealer hand entry
-            for(int num : game.getPlayerHand()) {
+            for(int num : game.getDealerHand()) {
                 c = dom.createElement(NUMBER_KEY);
                 c.appendChild(dom.createTextNode("" + num));
                 e.appendChild(c);

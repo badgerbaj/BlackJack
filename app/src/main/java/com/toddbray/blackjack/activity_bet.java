@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -97,5 +98,16 @@ public class activity_bet extends MainActivity implements View.OnClickListener {
         }
 
         startActivity(iActivity_Game);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent iActivity_Main = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(iActivity_Main);
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

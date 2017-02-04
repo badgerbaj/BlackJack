@@ -2,6 +2,7 @@ package com.toddbray.blackjack;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,8 @@ import junit.framework.Test;
 
 import java.io.File;
 import java.util.HashMap;
+
+import static com.toddbray.blackjack.R.layout.activity_main;
 
 /**
  * Created by Brad on 1/28/2017.
@@ -99,14 +102,12 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             // Second Dealer Card
             DealCard(DEALER_HAND_KEY, true);
 
-
         }
         else {
             DealHand();
         }
 
         TestSoftHand(PLAYER_HAND_KEY);
-        TestSoftHand(DEALER_HAND_KEY);
 
         int tally = playGame.getPlayerScore();
         int dealer_tally = playGame.getDealerScore();
@@ -126,6 +127,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             tv.setVisibility(View.VISIBLE);
             int winnings = playGame.getBetAmount();
             playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
+            ClearHands();
         } else if (tally == 21) {
             Button b = (Button) findViewById(R.id.hit_button);
             b.setVisibility(View.INVISIBLE);
@@ -138,6 +140,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             tv.setVisibility(View.VISIBLE);
             int winnings = playGame.getBetAmount() * 2;
             playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
+            ClearHands();
         } else if (dealer_tally == 21) {
             iv.setImageResource(downcard);
             tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
@@ -150,8 +153,10 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             TextView tv = (TextView) findViewById(R.id.result_textView);
             tv.setText("DEALER HAS BLACKJACK");
             tv.setVisibility(View.VISIBLE);
+            ClearHands();
         }
 
+        tv_DealerScore.setText(String.valueOf(playDeck.getCardValue(playGame.getDealerHand()[0])));
         tv_Cash.setText(String.valueOf(playGame.getPlayerCash()));
     }
 
@@ -178,6 +183,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                         TextView tv = (TextView) findViewById(R.id.result_textView);
                         tv.setText("You BUSTED");
                         tv.setVisibility(View.VISIBLE);
+                        ClearHands();
                         break;
                     }
                 }
@@ -196,12 +202,12 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                 // Display New Score
                 tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
 
-                while(playGame.getDealerScore() < playGame.getPlayerScore() && playGame.getPlayerScore() < 22) {
-                    while(playGame.getDealerScore() < 17) {
-                        DealCard(DEALER_HAND_KEY, false);
-                        if (playGame.getDealerScore() > 21) TestSoftHand(DEALER_HAND_KEY);
-                    }
-                    if(playGame.getDealerScore() >= 17) break;
+                TestSoftHand(DEALER_HAND_KEY);
+
+                // Dealers must draw on 16 or less
+                while(playGame.getDealerScore() < 17) {
+                    DealCard(DEALER_HAND_KEY, false);
+                    if (playGame.getDealerScore() > 21) TestSoftHand(DEALER_HAND_KEY);
                 }
 
                 if(playGame.getDealerScore() > 21) {
@@ -216,6 +222,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     tv.setVisibility(View.VISIBLE);
                     int winnings = playGame.getBetAmount() * 2;
                     playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
+                    ClearHands();
                     break;
                 }
 
@@ -231,6 +238,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     tv.setVisibility(View.VISIBLE);
                     int winnings = playGame.getBetAmount() * 2;
                     playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
+                    ClearHands();
                     break;
                 }
 
@@ -244,6 +252,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     TextView tv = (TextView) findViewById(R.id.result_textView);
                     tv.setText("DEALER WINS");
                     tv.setVisibility(View.VISIBLE);
+                    ClearHands();
                     break;
                 }
 
@@ -259,6 +268,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     tv.setVisibility(View.VISIBLE);
                     int winnings = playGame.getBetAmount();
                     playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
+                    ClearHands();
                     break;
                 }
 
@@ -279,6 +289,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                 ImageView iv = (ImageView) findViewById(playerCards.get(i));
                 iv.setImageResource(playDeck.getDeck().get(playGame.getPlayerHand()[i]));
 
+
             }
             if (playGame.getDealerHand()[i] != 0) {
 
@@ -291,6 +302,8 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     downcard = playDeck.getDeck().get(playGame.getDealerHand()[i]);
                 }
                 else iv.setImageResource(playDeck.getDeck().get(playGame.getDealerHand()[i]));
+
+
             }
         }
     }
@@ -420,5 +433,26 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                 tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
                 break;
         }
+    }
+
+    public void ClearHands() {
+
+        for(int i = 0; i < MAX_HAND; i++) {
+            playGame.setPlayerHandPos(i, 0);
+            playGame.setDealerHandPos(i, 0);
+        }
+        playGame.setBetAmount(0);
+        invokeXML.writeGameXML(playGame, new File(this.getFilesDir(), FILE_NAME_GAME));
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent iActivity_Main = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(iActivity_Main);
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

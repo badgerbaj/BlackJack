@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()) {
             case R.id.play_button:
                 // Clear prior game data
+                playGame = new GameState();
                 invokeXML.writeGameXML(playGame, new File(this.getFilesDir(), FILE_NAME_GAME));
 
                 // Call Bidding Activity
@@ -72,8 +73,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 playGame = invokeXML.readGameXML(new File(this.getFilesDir(), FILE_NAME_GAME));
                 // Validate gamestate
                 if(playGame.getPlayerCash() > 0) {
-                    Intent iActivity_Game = new Intent(getApplicationContext(), activity_game.class);
-                    startActivity(iActivity_Game);
+                    if(playGame.getBetAmount() == 0) {
+                        Intent iActivity = new Intent(getApplicationContext(), activity_bet.class);
+                        iActivity.putExtra(PLAYER_CASH_KEY, playGame.getPlayerCash());
+                        startActivity(iActivity);
+                    }
+                    else {
+                        Intent iActivity = new Intent(getApplicationContext(), activity_game.class);
+                        startActivity(iActivity);
+                    }
                 }
                 else {
                     Toast.makeText(this, "No valid gameplay found for resume", Toast.LENGTH_LONG).show();

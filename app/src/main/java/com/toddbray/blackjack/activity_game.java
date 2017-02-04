@@ -85,9 +85,10 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         playDeck = invokeXML.readDeckXML(file);
 
         if(playGame.getPlayerHand()[0] == 0) {
-
             // For Testing
             playDeck.shuffle(1);
+            playGame.setDealerScore(0);
+            playGame.setPlayerScore(0);
 
             // First Player Card
             DealCard(PLAYER_HAND_KEY, false);
@@ -151,8 +152,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         }
 
         tv_Cash.setText(String.valueOf(playGame.getPlayerCash()));
-        tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
-        tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
+
     }
 
     @Override
@@ -196,7 +196,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                 // Display New Score
                 tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
 
-                while(playGame.getDealerScore() < playGame.getPlayerScore() && playGame.getPlayerScore() < 22) {
+                while(playGame.getPlayerScore() < 22) {
                     while(playGame.getDealerScore() < 17) {
                         DealCard(DEALER_HAND_KEY, false);
                         if (playGame.getDealerScore() > 21) TestSoftHand(DEALER_HAND_KEY);
@@ -347,7 +347,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                         playGame.setDealerScore(tally);
 
                         // Display New Score
-                        if(isHidden == false) tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
+                        if(!isHidden) tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
 
                         // Move to the next card in the shuffled deck
                         playDeck.incrementDeckPosition();

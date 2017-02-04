@@ -74,7 +74,7 @@ public class GameState extends MainActivity {
     public void startNew() {
         playerScore = 0;
         dealerScore = 0;
-        playerCash = 20;
+        playerCash = 100;
         betAmount = 0;
         for(int i = 0; i < MAX_HAND; i++) {
             dealerHand[i] = 0;

@@ -108,7 +108,7 @@
         android:layout_alignStart="@+id/dealer_textView"
         android:layout_marginTop="5dp"
         android:typeface="serif"
-        android:textColor="#FF0000" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
         android:layout_toEndOf="@+id/dealer_score1_textView"
         android:layout_marginLeft="5dp"
         android:typeface="serif"
-        android:textColor="#FF0000" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -225,7 +225,7 @@
         android:layout_alignStart="@+id/player_1_imageView"
         android:layout_marginTop="5dp"
         android:typeface="serif"
-        android:textColor="#FF0000" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -238,21 +238,24 @@
         android:layout_toEndOf="@+id/player_score1_textView"
         android:layout_marginLeft="5dp"
         android:typeface="serif"
-        android:textColor="#FF0000" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text=""
         android:id="@+id/result_textView"
         android:layout_weight="1"
         android:layout_below="@+id/player_score1_textView"
         android:layout_alignLeft="@+id/player_score1_textView"
         android:layout_alignStart="@+id/player_score1_textView"
         android:layout_marginTop="20dp"
-        android:visibility="invisible"
-        android:textAlignment="center" />
+        android:visibility="visible"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#e5c100" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -333,6 +336,10 @@
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:textColor="#e5c100"
+        android:background="#000000"
+        android:textSize="24dp"
+        android:textStyle="bold"
         android:visibility="invisible" />
 
 </RelativeLayout>

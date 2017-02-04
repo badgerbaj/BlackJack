@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String DEALER_HAND_KEY = "dealerhand";
     public static final String BET_AMOUNT_KEY = "betamount";
     public static final String NUMBER_KEY = "number";
-    public static final String FILE_NAME = "play_data.xml";
+    public static final String FILE_NAME_GAME = "playgame_data.xml";
+    public static final String FILE_NAME_DECK = "playdeck_data.xml";
 
     public static final int CARD_COUNT = 52;
     public static final int BET_AMOUNT_ONE = 1;
@@ -57,17 +58,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.play_button:
+                // Clear prior game data
+                invokeXML.writeGameXML(playGame, new File(this.getFilesDir(), FILE_NAME_GAME));
+
                 // Call Bidding Activity
-
-                invokeXML.saveToXML(playGame, playDeck,  new File(this.getFilesDir(), FILE_NAME));
-
                 Intent iActivity_Bet = new Intent(getApplicationContext(), activity_bet.class);
                 iActivity_Bet.putExtra(PLAYER_CASH_KEY, playGame.getPlayerCash());
                 startActivity(iActivity_Bet);
                 break;
             case R.id.continue_button:
-                //File file = new File(this.getFilesDir(), FILE_NAME);
-                playGame = invokeXML.readGameXML(new File(this.getFilesDir(), FILE_NAME));
+
+                // Read play data
+                playGame = invokeXML.readGameXML(new File(this.getFilesDir(), FILE_NAME_GAME));
+                // Validate gamestate
                 if(playGame.getPlayerCash() > 0) {
                     Intent iActivity_Game = new Intent(getApplicationContext(), activity_game.class);
                     startActivity(iActivity_Game);

@@ -80,10 +80,11 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         super.onResume();
 
         File file = new File(this.getFilesDir(), FILE_NAME);
-
+        Toast.makeText(this,"Before " + String.valueOf(playGame.getBetAmount()),Toast.LENGTH_LONG).show();
         playGame = invokeXML.readGameXML(file);
         playDeck = invokeXML.readDeckXML(file);
-
+        Toast.makeText(this,"After " + String.valueOf(playGame.getBetAmount()),Toast.LENGTH_LONG).show();
+        Toast.makeText(this,String.valueOf(playGame.getBetAmount()),Toast.LENGTH_LONG).show();
         if(playGame.getPlayerHand()[0] == 0) {
             // For Testing
             playDeck.shuffle(1);

@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import junit.framework.Test;
 
 import java.io.File;
 import java.util.HashMap;
@@ -66,7 +69,6 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         }
     }
 
-
     @Override
     protected void onPause(){
         super.onPause();
@@ -97,10 +99,14 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             // Second Dealer Card
             DealCard(DEALER_HAND_KEY, true);
 
-            TestSoftHand(PLAYER_HAND_KEY);
+
         }
-        else DealHand();
-        // invokeXML.writeGameXML(playGame, playDeck, (new File(this.getFilesDir(), FILE_NAME)));
+        else {
+            DealHand();
+        }
+
+        TestSoftHand(PLAYER_HAND_KEY);
+        TestSoftHand(DEALER_HAND_KEY);
 
         int tally = playGame.getPlayerScore();
         int dealer_tally = playGame.getDealerScore();
@@ -147,8 +153,6 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         }
 
         tv_Cash.setText(String.valueOf(playGame.getPlayerCash()));
-        tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
-        tv_PlayerScore.setText(String.valueOf(playGame.getPlayerScore()));
     }
 
     @Override
@@ -308,6 +312,8 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                         // Add drawn card to hand
                         playGame.setPlayerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
 
+                        //Toast.makeText(this, "Card " + i + " Drawn: " + playDeck.getShuffleOrder()[playDeck.getDeckPosition()], Toast.LENGTH_LONG).show();
+
                         // Calculate Score
                         int tally = playGame.getPlayerScore();
                         tally += playDeck.getCardValue(playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
@@ -336,6 +342,8 @@ public class activity_game extends MainActivity implements View.OnClickListener 
 
                         // Add drawn card to hand
                         playGame.setDealerHandPos(i, playDeck.getShuffleOrder()[playDeck.getDeckPosition()]);
+
+                        //Toast.makeText(this, "Card " + i + " Drawn: " + playDeck.getShuffleOrder()[playDeck.getDeckPosition()], Toast.LENGTH_LONG).show();
 
                         // Calculate Score
                         int tally = playGame.getDealerScore();

@@ -1,6 +1,7 @@
 package com.toddbray.blackjack;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.KeyEvent;
@@ -30,7 +31,12 @@ public class activity_game extends MainActivity implements View.OnClickListener 
     private TextView tv_PlayerScore;
     private TextView tv_DealerScore;
     private TextView tv_Cash;
+
     private int downcard;
+
+    private MediaPlayer mp_deal_card;
+    private MediaPlayer mp_deal_hand;
+    private MediaPlayer mp_win;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,10 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             playGame.setBetAmount(extras.getInt(BET_AMOUNT_KEY));
             invokeXML.writeGameXML(playGame, (new File(this.getFilesDir(), FILE_NAME_GAME)));
         }
+
+        mp_deal_card = MediaPlayer.create(this, R.raw.deal_card);
+        mp_deal_hand = MediaPlayer.create(this, R.raw.deal);
+        mp_win = MediaPlayer.create(this, R.raw.win);
 
         int[] imageViewDealerIds = {R.id.dealer_1_imageView, R.id.dealer_2_imageView, R.id.dealer_3_imageView,
                 R.id.dealer_4_imageView, R.id.dealer_5_imageView, R.id.dealer_6_imageView, R.id.dealer_7_imageView,
@@ -120,6 +130,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
             ClearHands();
         } else if (tally == 21) {
+            mp_win.start();
             Button b = (Button) findViewById(R.id.hit_button);
             b.setVisibility(View.INVISIBLE);
             b = (Button) findViewById(R.id.stand_button);
@@ -202,6 +213,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                 }
 
                 if(playGame.getDealerScore() > 21) {
+                    mp_win.start();
                     b = (Button) findViewById(R.id.hit_button);
                     b.setVisibility(View.INVISIBLE);
                     b = (Button) findViewById(R.id.stand_button);
@@ -218,6 +230,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                 }
 
                 if(playGame.getPlayerScore() > playGame.getDealerScore() && playGame.getPlayerScore() <= 21 && playGame.getDealerScore() <= 21){
+                    mp_win.start();
                     b = (Button) findViewById(R.id.hit_button);
                     b.setVisibility(View.INVISIBLE);
                     b = (Button) findViewById(R.id.stand_button);
@@ -273,6 +286,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
     }
 
     public void DealHand() {
+        mp_deal_hand.start();
         for(int i =0; i < MAX_HAND; i++) {
             if (playGame.getPlayerHand()[i] != 0) {
 
@@ -304,7 +318,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             switch (target) {
                 case PLAYER_HAND_KEY:
                     if (playGame.getPlayerHand()[i] == 0) {
-
+                        mp_deal_card.start();
                         // Draw the next card in the shuffled deck
                         ImageView iv = (ImageView) findViewById(playerCards.get(i));
                         if(isHidden) {
@@ -335,7 +349,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
                     break;
                 case DEALER_HAND_KEY:
                     if (playGame.getDealerHand()[i] == 0) {
-
+                        mp_deal_card.start();
                         // Draw the next card in the shuffled deck
                         ImageView iv = (ImageView) findViewById(dealerCards.get(i));
                         if(isHidden) {
@@ -453,28 +467,28 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             int i = 0;
             public void onTick(long millisUntilFinished) {
 
-                    switch (i) {
-                        case 0:
-                            // First Player Card
-                            DealCard(PLAYER_HAND_KEY, false);
+                switch (i) {
+                    case 0:
+                        // First Player Card
+                        DealCard(PLAYER_HAND_KEY, false);
 
-                            break;
-                        case 1:
-                            // First Dealer Card
-                            DealCard(DEALER_HAND_KEY, false);
-                            break;
-                        case 2:
-                            // Second Player Card
-                            DealCard(PLAYER_HAND_KEY, false);
-                            break;
+                        break;
+                    case 1:
+                        // First Dealer Card
+                        DealCard(DEALER_HAND_KEY, false);
+                        break;
+                    case 2:
+                        // Second Player Card
+                        DealCard(PLAYER_HAND_KEY, false);
+                        break;
 
-                        case 3:
-                            // Second Dealer Card
-                            DealCard(DEALER_HAND_KEY, true);
-                            break;
-                    }
-                    i++;
+                    case 3:
+                        // Second Dealer Card
+                        DealCard(DEALER_HAND_KEY, true);
+                        break;
                 }
+                i++;
+            }
 
             public void onFinish() {
 

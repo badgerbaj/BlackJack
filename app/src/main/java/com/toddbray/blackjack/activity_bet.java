@@ -2,6 +2,7 @@ package com.toddbray.blackjack;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -18,6 +19,9 @@ import android.widget.Toast;
  */
 
 public class activity_bet extends MainActivity implements View.OnClickListener {
+
+    private MediaPlayer mp_bet;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +32,8 @@ public class activity_bet extends MainActivity implements View.OnClickListener {
         if(extras != null) {
             playGame.setPlayerCash(extras.getInt(PLAYER_CASH_KEY));
         }
+
+        mp_bet = MediaPlayer.create(this, R.raw.bet);
 
         int[] buttonIds = {R.id.one_dollar_imageButton, R.id.five_dollar_imageButton,
                 R.id.ten_dollar_imageButton, R.id.twenty_dollar_imageButton };
@@ -72,7 +78,7 @@ public class activity_bet extends MainActivity implements View.OnClickListener {
         //TODO: Validate the player has the required cash
         //TODO: Pass playGame data as intent
         Intent iActivity_Game = new Intent(getApplicationContext(), activity_game.class);
-
+        mp_bet.start();
         switch(v.getId()) {
             case R.id.one_dollar_imageButton:
                 //

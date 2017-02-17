@@ -101,7 +101,7 @@ public class activity_game extends MainActivity implements View.OnClickListener 
             // For Testing
             playDeck.shuffle(1);
 
-            spinSelected();
+            begin_Deal();
 
         }
         else {
@@ -109,54 +109,6 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         }
 
         TestSoftHand(PLAYER_HAND_KEY);
-
-        int tally = playGame.getPlayerScore();
-        int dealer_tally = playGame.getDealerScore();
-        ImageView iv = (ImageView) findViewById(dealerCards.get(1));
-
-        if (tally == 21 && dealer_tally == 21) {
-            iv.setImageResource(downcard);
-            tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
-            Button b = (Button) findViewById(R.id.hit_button);
-            b.setVisibility(View.INVISIBLE);
-            b = (Button) findViewById(R.id.stand_button);
-            b.setVisibility(View.INVISIBLE);
-            b = (Button) findViewById(R.id.next_button);
-            b.setVisibility(View.VISIBLE);
-            TextView tv = (TextView) findViewById(R.id.result_textView);
-            tv.setText("PUSH");
-            tv.setVisibility(View.VISIBLE);
-            int winnings = playGame.getBetAmount();
-            playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
-            ClearHands();
-        } else if (tally == 21) {
-            mp_win.start();
-            Button b = (Button) findViewById(R.id.hit_button);
-            b.setVisibility(View.INVISIBLE);
-            b = (Button) findViewById(R.id.stand_button);
-            b.setVisibility(View.INVISIBLE);
-            b = (Button) findViewById(R.id.next_button);
-            b.setVisibility(View.VISIBLE);
-            TextView tv = (TextView) findViewById(R.id.result_textView);
-            tv.setText("BLACKJACK!");
-            tv.setVisibility(View.VISIBLE);
-            int winnings = playGame.getBetAmount() * 2;
-            playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
-            ClearHands();
-        } else if (dealer_tally == 21) {
-            iv.setImageResource(downcard);
-            tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
-            Button b = (Button) findViewById(R.id.hit_button);
-            b.setVisibility(View.INVISIBLE);
-            b = (Button) findViewById(R.id.stand_button);
-            b.setVisibility(View.INVISIBLE);
-            b = (Button) findViewById(R.id.next_button);
-            b.setVisibility(View.VISIBLE);
-            TextView tv = (TextView) findViewById(R.id.result_textView);
-            tv.setText("DEALER HAS BLACKJACK");
-            tv.setVisibility(View.VISIBLE);
-            ClearHands();
-        }
 
         tv_DealerScore.setText(String.valueOf(playDeck.getCardValue(playGame.getDealerHand()[0])));
         tv_Cash.setText(String.valueOf(playGame.getPlayerCash()));
@@ -461,37 +413,84 @@ public class activity_game extends MainActivity implements View.OnClickListener 
         return super.onKeyDown(keyCode, event);
     }
 
-    public void spinSelected()
+    public void begin_Deal()
     {
-        new CountDownTimer(3200, 400) {
+        new CountDownTimer(2100, 400) {
             int i = 0;
             public void onTick(long millisUntilFinished) {
 
-                    switch (i) {
-                        case 0:
-                            // First Player Card
-                            DealCard(PLAYER_HAND_KEY, false);
+                switch (i) {
+                    case 1:
+                        // First Player Card
+                        DealCard(PLAYER_HAND_KEY, false);
 
-                            break;
-                        case 1:
-                            // First Dealer Card
-                            DealCard(DEALER_HAND_KEY, false);
-                            break;
-                        case 2:
-                            // Second Player Card
-                            DealCard(PLAYER_HAND_KEY, false);
-                            break;
+                        break;
+                    case 2:
+                        // First Dealer Card
+                        DealCard(DEALER_HAND_KEY, false);
+                        break;
+                    case 3:
+                        // Second Player Card
+                        DealCard(PLAYER_HAND_KEY, false);
+                        break;
 
-                        case 3:
-                            // Second Dealer Card
-                            DealCard(DEALER_HAND_KEY, true);
-                            break;
-                    }
-                    i++;
+                    case 4:
+                        // Second Dealer Card
+                        DealCard(DEALER_HAND_KEY, true);
+                        break;
                 }
+                i++;
+            }
 
             public void onFinish() {
+                int tally = playGame.getPlayerScore();
+                int dealer_tally = playGame.getDealerScore();
 
+                if (tally == 21 && dealer_tally == 21) {
+                    ImageView iv = (ImageView) findViewById(dealerCards.get(1));
+                    iv.setImageResource(downcard);
+                    tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
+                    Button b = (Button) findViewById(R.id.hit_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.stand_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.next_button);
+                    b.setVisibility(View.VISIBLE);
+                    TextView tv = (TextView) findViewById(R.id.result_textView);
+                    tv.setText("PUSH");
+                    tv.setVisibility(View.VISIBLE);
+                    int winnings = playGame.getBetAmount();
+                    playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
+                    ClearHands();
+                } else if (tally == 21) {
+                    mp_win.start();
+                    Button b = (Button) findViewById(R.id.hit_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.stand_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.next_button);
+                    b.setVisibility(View.VISIBLE);
+                    TextView tv = (TextView) findViewById(R.id.result_textView);
+                    tv.setText("BLACKJACK!");
+                    tv.setVisibility(View.VISIBLE);
+                    int winnings = playGame.getBetAmount() * 2;
+                    playGame.setPlayerCash(playGame.getPlayerCash() + winnings);
+                    ClearHands();
+                } else if (dealer_tally == 21) {
+                    ImageView iv = (ImageView) findViewById(dealerCards.get(1));
+                    iv.setImageResource(downcard);
+                    tv_DealerScore.setText(String.valueOf(playGame.getDealerScore()));
+                    Button b = (Button) findViewById(R.id.hit_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.stand_button);
+                    b.setVisibility(View.INVISIBLE);
+                    b = (Button) findViewById(R.id.next_button);
+                    b.setVisibility(View.VISIBLE);
+                    TextView tv = (TextView) findViewById(R.id.result_textView);
+                    tv.setText("DEALER HAS BLACKJACK");
+                    tv.setVisibility(View.VISIBLE);
+                    ClearHands();
+                }
             }
         }.start();
     }

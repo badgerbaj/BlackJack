@@ -9,7 +9,7 @@
         android:label="B &amp; T CASINO: BLACKJACK"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait" android:noHistory="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity_bet" android:screenOrientation="portrait" />
-        <activity android:name=".activity_game" android:screenOrientation="portrait" />
+        <activity android:name=".activity_bet" android:screenOrientation="portrait" android:noHistory="true"/>
+        <activity android:name=".activity_game" android:screenOrientation="portrait" android:noHistory="true"/>
     </application>
 
 </manifest>
